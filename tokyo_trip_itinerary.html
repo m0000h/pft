@@ -1,0 +1,1323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tokyo Road Trip — Nov 9–19, 2026</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Segoe UI', sans-serif; background: #0f0f13; color: #e0e0e8; }
+.hero { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); padding: 32px 24px 24px; text-align: center; border-bottom: 2px solid #e94560; }
+.hero h1 { font-size: 1.8rem; font-weight: 800; color: #fff; }
+.hero p { color: #a0aec0; margin-top: 5px; font-size: 0.88rem; }
+.badge { display: inline-block; color: #fff; font-size: 0.7rem; font-weight: 700; padding: 3px 10px; border-radius: 99px; margin: 7px 2px 0; }
+.b-red{background:#e94560}.b-green{background:#38a169}.b-orange{background:#dd6b20}.b-blue{background:#3182ce}.b-purple{background:#805ad5}
+
+.container { max-width: 900px; margin: 0 auto; padding: 20px 14px 60px; }
+
+/* Legend */
+.legend { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; background: #1a1a2e; border-radius: 10px; padding: 12px 14px; }
+.legend span { font-size: 0.7rem; padding: 2px 9px; border-radius: 99px; font-weight: 600; }
+
+/* Summary */
+.summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 9px; margin-bottom: 20px; }
+.s-item { background: #1a1a2e; border: 1px solid #2d3748; border-radius: 9px; padding: 11px; }
+.s-item .sl { font-size: 0.65rem; color: #718096; text-transform: uppercase; letter-spacing: 0.5px; }
+.s-item .sv { font-size: 0.95rem; font-weight: 700; color: #fff; margin-top: 2px; }
+.s-item .ss { font-size: 0.7rem; color: #a0aec0; }
+
+/* Day cards */
+.day { background: #1a1a2e; border: 1px solid #2d3748; border-radius: 12px; margin-bottom: 12px; overflow: hidden; }
+.day.matsuri { border-color: #e94560; box-shadow: 0 0 18px rgba(233,69,96,0.15); }
+.day-hdr { display: flex; align-items: center; gap: 11px; padding: 12px 15px; cursor: pointer; user-select: none; transition: background 0.15s; }
+.day-hdr:hover { background: rgba(255,255,255,0.03); }
+.dn { width: 38px; height: 38px; border-radius: 50%; background: #2d3748; color: #fff; font-weight: 800; font-size: 0.75rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.dn.red{background:#e94560}.dn.fire{background:linear-gradient(135deg,#e94560,#f6ad55)}
+.di { flex: 1; min-width: 0; }
+.di h3 { font-size: 0.92rem; font-weight: 700; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.di p { font-size: 0.72rem; color: #718096; margin-top: 1px; }
+.dc { text-align: right; flex-shrink: 0; }
+.dc .amt { font-size: 0.92rem; font-weight: 700; color: #f6ad55; }
+.dc .lbl { font-size: 0.65rem; color: #718096; }
+.chv { color: #718096; font-size: 0.72rem; margin-left: 5px; transition: transform 0.2s; display: inline-block; }
+.chv.open { transform: rotate(180deg); }
+
+.day-body { padding: 0 15px 15px; display: none; }
+.day-body.open { display: block; }
+
+/* Route bar */
+.route-bar { background: #0f0f1a; border-radius: 7px; padding: 8px 13px; margin-bottom: 13px; font-size: 0.77rem; color: #a0aec0; }
+.route-bar strong { color: #e2e8f0; }
+.arr { color: #4a5568; margin: 0 3px; }
+
+/* Time blocks */
+.time-block { margin-bottom: 14px; }
+.time-label { font-size: 0.65rem; font-weight: 700; color: #718096; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid #2d3748; padding-bottom: 5px; margin-bottom: 9px; }
+
+/* Stops */
+.stop { display: flex; gap: 9px; margin-bottom: 9px; padding: 8px 10px; background: #0f0f1a; border-radius: 8px; border-left: 3px solid transparent; }
+.stop.s-drive { border-color: #4a5568; }
+.stop.s-shop { border-color: #38a169; }
+.stop.s-auto { border-color: #e94560; }
+.stop.s-arcade { border-color: #805ad5; }
+.stop.s-donki { border-color: #ecc94b; }
+.stop.s-hotel { border-color: #3182ce; }
+.stop.s-food { border-color: #dd6b20; }
+.stop.s-autobacs { border-color: #fc8181; }
+
+.si { width: 28px; height: 28px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 0.82rem; flex-shrink: 0; margin-top: 1px; background: #1a1a2e; }
+.sc { flex: 1; min-width: 0; }
+.sc .st { font-size: 0.85rem; font-weight: 600; color: #e2e8f0; }
+.sc .sd { font-size: 0.74rem; color: #718096; margin-top: 2px; line-height: 1.5; }
+.sc .sp { font-size: 0.73rem; color: #f6ad55; font-weight: 600; margin-top: 3px; }
+.tag { display: inline-block; font-size: 0.6rem; padding: 1px 6px; border-radius: 4px; margin: 3px 2px 0 0; font-weight: 700; letter-spacing: 0.3px; }
+.t-hardoff{background:#1a3a1a;color:#68d391}
+.t-bookoff{background:#1a2a3a;color:#90cdf4}
+.t-upgarage{background:#3a1a1a;color:#fc8181}
+.t-arcade{background:#2a1a4a;color:#d6bcfa}
+.t-donki{background:#3a3a00;color:#fefcbf}
+.t-autobacs{background:#3a1a1a;color:#feb2b2}
+.t-hotel{background:#1a2a4a;color:#90cdf4}
+.t-food{background:#2a2a00;color:#fbd38d}
+.t-2ndst{background:#1a3a2a;color:#9ae6b4}
+.t-geo{background:#1a1a3a;color:#a3bffa}
+.t-surugaya{background:#2d1a3a;color:#e9d8fd}
+.t-treasure{background:#2a3a1a;color:#c6f6d5}
+.t-warn{background:#3a1a00;color:#fbd38d}
+
+/* Cost box */
+.cost-box { background: #0f0f1a; border-radius: 7px; padding: 11px 13px; margin-top: 11px; }
+.cost-box h4 { font-size: 0.65rem; color: #718096; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 7px; }
+.cr { display: flex; justify-content: space-between; font-size: 0.78rem; padding: 3px 0; border-bottom: 1px solid #1a1a2e; }
+.cr:last-child { border: none; font-weight: 700; color: #f6ad55; font-size: 0.83rem; padding-top: 6px; }
+.cr .cl { color: #a0aec0; }
+.cr .cv { color: #e2e8f0; }
+
+/* Grand total */
+.grand { background: linear-gradient(135deg, #16213e, #0f3460); border: 2px solid #e94560; border-radius: 14px; padding: 24px; text-align: center; margin-top: 6px; }
+.grand h2 { font-size: 0.75rem; color: #a0aec0; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+.grand .gjpy { font-size: 2.5rem; font-weight: 800; color: #fff; }
+.grand .gaud { font-size: 1rem; color: #f6ad55; margin-top: 3px; }
+.grand .gnote { font-size: 0.72rem; color: #718096; margin-top: 5px; }
+.grand-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 8px; margin-top: 16px; }
+.gi { background: rgba(0,0,0,0.3); border-radius: 8px; padding: 9px; }
+.gi .gl { font-size: 0.62rem; color: #718096; text-transform: uppercase; }
+.gi .gv { font-size: 0.9rem; font-weight: 700; color: #e2e8f0; margin-top: 2px; }
+
+.notes { background: #1a1a2e; border-left: 3px solid #f6ad55; border-radius: 0 10px 10px 0; padding: 13px 15px; margin-top: 16px; }
+.notes h3 { font-size: 0.68rem; color: #f6ad55; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 9px; }
+.notes li { font-size: 0.78rem; color: #a0aec0; padding: 3px 0 3px 15px; position: relative; list-style: none; line-height: 1.5; }
+.notes li::before { content: '→'; position: absolute; left: 0; color: #f6ad55; }
+
+.open-all-btn { background: #2d3748; color: #e2e8f0; border: none; padding: 8px 18px; border-radius: 7px; font-size: 0.78rem; cursor: pointer; margin-bottom: 14px; font-weight: 600; }
+.open-all-btn:hover { background: #3d4a5e; }
+</style>
+</head>
+<body>
+<div class="hero">
+  <h1>🇯🇵 Narita → Ebisu Matsuri Road Trip 2026</h1>
+  <p>Packed with thrift stores, JDM parts, Donki, arcades, UFO catchers &amp; 31hrs of drift</p>
+  <span class="badge b-red">Nov 9–19, 2026</span>
+  <span class="badge b-green">10 Nights</span>
+  <span class="badge b-orange">Matsuri: Nov 14–15</span>
+  <span class="badge b-blue">~700km total driving</span>
+  <span class="badge b-purple">5–8 stops/day</span>
+</div>
+
+<div class="container">
+
+<button class="open-all-btn" onclick="toggleAll()">⬇ Expand All Days</button>
+
+<!-- Legend -->
+<div class="legend">
+  <span style="background:#1a3a1a;color:#68d391">🛍 HardOff/HobbyOff/OffHouse</span>
+  <span style="background:#1a2a3a;color:#90cdf4">📚 BookOff</span>
+  <span style="background:#3a1a1a;color:#fc8181">🔧 Up Garage</span>
+  <span style="background:#2a1a4a;color:#d6bcfa">🕹 Arcade/UFO</span>
+  <span style="background:#3a3a00;color:#fefcbf">🦁 Donki</span>
+  <span style="background:#3a1a1a;color:#feb2b2">🚗 Autobacs</span>
+  <span style="background:#1a3a2a;color:#9ae6b4">👕 2nd Street</span>
+  <span style="background:#2d1a3a;color:#e9d8fd">🏺 Surugaya/GEO</span>
+  <span style="background:#2a3a1a;color:#c6f6d5">💎 Treasure Factory</span>
+  <span style="background:#1a2a4a;color:#90cdf4">🏨 Hotel</span>
+</div>
+
+<!-- Overview -->
+<div class="summary">
+  <div class="s-item"><div class="sl">Car Rental</div><div class="sv">¥7,000/day</div><div class="ss">+¥500/day ETC card</div></div>
+  <div class="s-item"><div class="sl">Daily Fuel</div><div class="sv">¥700–2,200</div><div class="ss">~¥170/L, compact auto</div></div>
+  <div class="s-item"><div class="sl">Hotels</div><div class="sv">¥6,000–14,000</div><div class="ss">per night</div></div>
+  <div class="s-item"><div class="sl">Matsuri Ticket</div><div class="sv">¥3,000</div><div class="ss">Spectator + insurance</div></div>
+  <div class="s-item"><div class="sl">Ops Total</div><div class="sv">~¥325,000</div><div class="ss">excl. shopping</div></div>
+  <div class="s-item"><div class="sl">In AUD</div><div class="sv">~$3,350</div><div class="ss">at ¥97/AUD</div></div>
+</div>
+
+<!-- ═══════════════ DAY 1 ═══════════════ -->
+<div class="day">
+  <div class="day-hdr" onclick="toggle(this)">
+    <div class="dn red">D1</div>
+    <div class="di"><h3>☁️ Arrival — Narita / Chiba Area</h3><p>Sun Nov 9 · Pick up car, immediate thrift action</p></div>
+    <div class="dc"><div class="amt">¥18,200</div><div class="lbl">ops cost</div></div>
+    <span class="chv">▼</span>
+  </div>
+  <div class="day-body">
+    <div class="route-bar">Narita Airport <span class="arr">→</span> <strong>Tomisato/Narita cluster</strong> <span class="arr">→</span> <strong>Stay: Narita area</strong> | Drive: ~30km</div>
+    <div class="time-block">
+      <div class="time-label">⚙️ Logistics</div>
+      <div class="stop s-drive">
+        <div class="si">✈️</div>
+        <div class="sc">
+          <div class="st">Narita Airport — Collect Rental Car</div>
+          <div class="sd">Toyota/Nissan Rent-a-Car at the terminal. Book compact auto with ETC card. Shuttle bus to the rental yard (~15 min). GPS set to English. Ask about the NEXCO Expressway discount pass for foreign visitors — can save thousands on tolls.</div>
+          <div class="sp">¥7,500 (car + ETC card)</div>
+        </div>
+      </div>
+    </div>
+    <div class="time-block">
+      <div class="time-label">🕙 10AM–1PM — First stop cluster (15 min from airport)</div>
+      <div class="stop s-shop">
+        <div class="si">🛍️</div>
+        <div class="sc">
+          <div class="st">Hard Off / Off House / Hobby Off — Tomisato Inter</div>
+          <div class="sd">532-41 Nanae, Tomisato. Huge 3-in-1 complex just off the expressway. HardOff for junk electronics (cables, laptops from ¥100), HobbyOff for figures and retro games, OffHouse for clothing and household goods. Start here — it'll take 1.5hrs easily.</div>
+          <div class="sp">Budget: ¥3,000–¥15,000</div>
+          <span class="tag t-hardoff">HARDOFF</span><span class="tag t-hardoff">HOBBYOFF</span><span class="tag t-hardoff">OFFHOUSE</span>
+        </div>
+      </div>
+      <div class="stop s-shop">
+        <div class="si">📚</div>
+        <div class="sc">
+          <div class="st">BookOff AEON Mall Narita</div>
+          <div class="sd">24 Uingutsuchiya, Narita. Inside AEON Mall. Manga from ¥100, CDs, scale cars, anime figures, games. Bring passport for 10% tax-free. Strong on retro media and collectibles. Allow 45–60min.</div>
+          <div class="sp">Budget: ¥2,000–¥8,000</div>
+          <span class="tag t-bookoff">BOOKOFF</span>
+        </div>
+      </div>
+    </div>
+    <div class="time-block">
+      <div class="time-label">🕑 1PM–3PM — Lunch + Donki Run</div>
+      <div class="stop s-food">
+        <div class="si">🍜</div>
+        <div class="sc">
+          <div class="st">Lunch — Narita area ramen or gyudon</div>
+          <div class="sd">Sukiya, Matsuya or Yoshinoya for cheap fast fill-up, or find a local ramen shop. Budget ¥700–1,200. Fuel up — busy afternoon ahead.</div>
+          <div class="sp">¥900 est.</div>
+          <span class="tag t-food">FOOD</span>
+        </div>
+      </div>
+      <div class="stop s-donki">
+        <div class="si">🦁</div>
+        <div class="sc">
+          <div class="st">Don Quijote — Narita/Chiba area</div>
+          <div class="sd">Nearest Donki to Narita. Multi-floor discount chaos — souvenirs, snacks, alcohol, tools, kitchen gear, clothing, electronics, cosplay. Tax-free with passport over ¥5,000. Great for stocking up on snacks for the drive north and picking up cheap thermals (essential for Ebisu in November).</div>
+          <div class="sp">Budget: ¥3,000–¥10,000</div>
+          <span class="tag t-donki">DONKI</span>
+        </div>
+      </div>
+    </div>
+    <div class="time-block">
+      <div class="time-label">🕓 3PM–5:30PM — Afternoon sweep</div>
+      <div class="stop s-shop">
+        <div class="si">🛍️</div>
+        <div class="sc">
+          <div class="st">Hard Off Ajiki (Inba District)</div>
+          <div class="sd">2169 Ajiki, Sakae, Inba. Second HardOff run — smaller but worth a dig for retro electronics and instruments. Junk section starts at ¥100. Good for finding random overlooked items the big stores miss.</div>
+          <div class="sp">Budget: ¥500–¥5,000</div>
+          <span class="tag t-hardoff">HARDOFF</span>
+        </div>
+      </div>
+      <div class="stop s-arcade">
+        <div class="si">🕹️</div>
+        <div class="sc">
+          <div class="st">Local Arcade / UFO Catcher stop — Narita area</div>
+          <div class="sd">Any Round1, GIGO or Taito Station near your hotel. Japan's arcades are everywhere. Grab ¥500 in coins and have a crack at the UFO catchers — anime plushies, figures, Pokémon goods. Great jet-lag-buster activity. Staff will assist if you're struggling (ask 「アシストお願いします」).</div>
+          <div class="sp">Budget: ¥500–¥2,000</div>
+          <span class="tag t-arcade">UFO CATCHER</span><span class="tag t-arcade">ARCADE</span>
+        </div>
+      </div>
+    </div>
+    <div class="time-block">
+      <div class="time-label">🏨 Evening</div>
+      <div class="stop s-hotel">
+        <div class="si">🏨</div>
+        <div class="sc">
+          <div class="st">Stay: Dormy Inn Narita / APA Hotel Narita</div>
+          <div class="sd">Budget business hotel, free parking, early sleep to recover from the flight. ¥6,000–¥8,000. Many have natural hot spring baths — perfect first-night recovery.</div>
+          <div class="sp">¥7,000 est.</div>
+          <span class="tag t-hotel">HOTEL</span>
+        </div>
+      </div>
+    </div>
+    <div class="cost-box">
+      <h4>Day 1 Cost Breakdown</h4>
+      <div class="cr"><span class="cl">Car rental + ETC card</span><span class="cv">¥7,500</span></div>
+      <div class="cr"><span class="cl">Fuel (~40km)</span><span class="cv">¥700</span></div>
+      <div class="cr"><span class="cl">Hotel</span><span class="cv">¥7,000</span></div>
+      <div class="cr"><span class="cl">Food & drinks</span><span class="cv">¥2,200</span></div>
+      <div class="cr"><span class="cl">Arcade coins</span><span class="cv">¥1,000</span></div>
+      <div class="cr"><span class="cl">Day Total (ops only)</span><span class="cv">¥18,400</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ DAY 2 ═══════════════ -->
+<div class="day">
+  <div class="day-hdr" onclick="toggle(this)">
+    <div class="dn red">D2</div>
+    <div class="di"><h3>🏎️ Narita → Tsukuba — JDM Capital</h3><p>Mon Nov 10 · 6+ stops, Up Garage + mega thrift cluster</p></div>
+    <div class="dc"><div class="amt">¥22,000</div><div class="lbl">ops cost</div></div>
+    <span class="chv">▼</span>
+  </div>
+  <div class="day-body">
+    <div class="route-bar">Narita <span class="arr">→</span> <strong>Tsukuba</strong> (~80km, ~1.5hr via Ken-O Expwy) <span class="arr">→</span> <strong>Stay: Tsukuba</strong></div>
+    <div class="time-block">
+      <div class="time-label">🕙 10AM–12:30PM — JDM & Car Parts</div>
+      <div class="stop s-auto">
+        <div class="si">🔧</div>
+        <div class="sc">
+          <div class="st">Up Garage Tsukuba</div>
+          <div class="sd">1-23-2 Ninomiya, Tsukuba. One of the better-stocked Up Garages in Kanto. Wheels, coilovers, seats, exhausts, aero, gauges, harnesses. The parking lot itself is a show — JDM cars everywhere, people just hanging out. Allow 1–1.5hrs. <strong>Closed Wednesdays.</strong></div>
+          <div class="sp">Budget: ¥5,000–¥40,000+</div>
+          <span class="tag t-upgarage">UP GARAGE</span>
+        </div>
+      </div>
+      <div class="stop s-autobacs">
+        <div class="si">🚗</div>
+        <div class="sc">
+          <div class="st">Autobacs Tsukuba</div>
+          <div class="sd">Major car parts chain — new parts at good prices. Great for small accessories: shift knobs, mirrors, gauges, wiper blades, car care products. Can browse while Up Garage finds are fresh in your mind. Often co-located or very close to Up Garage stores.</div>
+          <div class="sp">Budget: ¥1,000–¥10,000</div>
+          <span class="tag t-autobacs">AUTOBACS</span>
+        </div>
+      </div>
+    </div>
+    <div class="time-block">
+      <div class="time-label">🕧 12:30PM–2PM — Lunch + Donki</div>
+      <div class="stop s-food">
+        <div class="si">🍜</div>
+        <div class="sc">
+          <div class="st">Lunch — Tsukuba area</div>
+          <div class="sd">Ramen or tonkatsu near the shopping district. Target ¥900–¥1,300. Many fast options inside the AEON Mall.</div>
+          <div class="sp">¥1,000 est.</div>
+          <span class="tag t-food">FOOD</span>
+        </div>
+      </div>
+      <div class="stop s-donki">
+        <div class="si">🦁</div>
+        <div class="sc">
+          <div class="st">Don Quijote Tsukuba</div>
+          <div class="sd">Tsukuba has a Donki in the city centre — tools, snacks, clothing, alcohol, electronics. Great for picking up any forgotten travel essentials (gloves, beanie, thermals for Ebisu). Tax-free over ¥5,000.</div>
+          <div class="sp">Budget: ¥2,000–¥8,000</div>
+          <span class="tag t-donki">DONKI</span>
+        </div>
+      </div>
+    </div>
+    <div class="time-block">
+      <div class="time-label">🕑 2PM–5PM — Thrift Mega-Cluster</div>
+      <div class="stop s-shop">
+        <div class="si">🛍️</div>
+        <div class="sc">
+          <div class="st">Hard Off Tsukuba (Kenkyugakuen)</div>
+          <div class="sd">3-10-1 Kenkyugakuen, Tsukuba. ⭐ Two-section complex — musical instruments, power tools, electronics with a gold-mine junk section (from ¥100). Also clothing and furniture. Strong on audio gear. Allow 45–60min.</div>
+          <div class="sp">Budget: ¥2,000–¥12,000</div>
+          <span class="tag t-hardoff">HARDOFF</span>
+        </div>
+      </div>
+      <div class="stop s-shop">
+        <div class="si">📚</div>
+        <div class="sc">
+          <div class="st">BookOff Tsukuba (Sakura)</div>
+          <div class="sd">1-12-1 Sakura, Tsukuba. Manga from ¥100, anime figures, PS2–PS5 games, retro games, vinyl records, DVDs. University student sell-backs mean high-quality reference books. Tax-free with passport.</div>
+          <div class="sp">Budget: ¥1,000–¥8,000</div>
+          <span class="tag t-bookoff">BOOKOFF</span>
+        </div>
+      </div>
+      <div class="stop s-shop">
+        <div class="si">👕</div>
+        <div class="sc">
+          <div class="st">2nd Street Tsukuba</div>
+          <div class="sd">Second Street (セカンドストリート) is a nationwide used clothing and goods chain. Think branded streetwear, sneakers, outdoor gear, bags and accessories at steep discounts. Different stock from HardOff — leans more fashion/lifestyle. Great for vintage finds.</div>
+          <div class="sp">Budget: ¥1,000–¥8,000</div>
+          <span class="tag t-2ndst">2ND STREET</span>
+        </div>
+      </div>
+    </div>
+    <div class="time-block">
+      <div class="time-label">🕔 5PM–7PM — Arcade Wind-Down</div>
+      <div class="stop s-arcade">
+        <div class="si">🕹️</div>
+        <div class="sc">
+          <div class="st">GiGO Dayz Town Tsukuba</div>
+          <div class="sd">1-9-2 Takezono, Tsukuba (B1F). ⭐ GIGO arcade inside Dayz Town mall. Described as "a museum of old arcade games" — retro rhythm games (BeatMania, etc.), UFO catchers, prize machines. Open until midnight. Old-school arcade vibes.</div>
+          <div class="sp">Budget: ¥500–¥2,000</div>
+          <span class="tag t-arcade">GIGO</span><span class="tag t-arcade">UFO CATCHER</span>
+        </div>
+      </div>
+    </div>
+    <div class="time-block">
+      <div class="time-label">🏨 Evening</div>
+      <div class="stop s-hotel">
+        <div class="si">🏨</div>
+        <div class="sc">
+          <div class="st">Stay: Toyoko Inn Tsukuba / Route Inn Tsukuba</div>
+          <div class="sd">Budget chain, free parking, breakfast option. ¥6,500–¥8,000.</div>
+          <div class="sp">¥7,500 est.</div>
+          <span class="tag t-hotel">HOTEL</span>
+        </div>
+      </div>
+    </div>
+    <div class="cost-box">
+      <h4>Day 2 Cost Breakdown</h4>
+      <div class="cr"><span class="cl">Car rental + ETC</span><span class="cv">¥7,500</span></div>
+      <div class="cr"><span class="cl">Expressway tolls (Ken-O ~80km)</span><span class="cv">¥1,800</span></div>
+      <div class="cr"><span class="cl">Fuel (~100km)</span><span class="cv">¥1,500</span></div>
+      <div class="cr"><span class="cl">Hotel</span><span class="cv">¥7,500</span></div>
+      <div class="cr"><span class="cl">Food & drinks</span><span class="cv">¥2,500</span></div>
+      <div class="cr"><span class="cl">Arcade coins</span><span class="cv">¥1,000</span></div>
+      <div class="cr"><span class="cl">Day Total (ops only)</span><span class="cv">¥21,800</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ DAY 3 ═══════════════ -->
+<div class="day">
+  <div class="day-hdr" onclick="toggle(this)">
+    <div class="dn red">D3</div>
+    <div class="di"><h3>🚗 Tsukuba → Utsunomiya — Gyoza City Haul</h3><p>Tue Nov 11 · 7+ stops, GarageOff mega-complex + Surugaya</p></div>
+    <div class="dc"><div class="amt">¥23,000</div><div class="lbl">ops cost</div></div>
+    <span class="chv">▼</span>
+  </div>
+  <div class="day-body">
+    <div class="route-bar">Tsukuba <span class="arr">→</span> <strong>Utsunomiya</strong> (~90km, ~1.5hr Tohoku Expwy) <span class="arr">→</span> <strong>Stay: Utsunomiya</strong></div>
+    <div class="time-block">
+      <div class="time-label">🕙 10AM–12:30PM — JDM & Parts Run</div>
+      <div class="stop s-auto">
+        <div class="si">🔧</div>
+        <div class="sc">
+          <div class="st">Up Garage Utsunomiya (Main — Tsurutamachi)</div>
+          <div class="sd">2002-1 Tsurutamachi, Utsunomiya. ⭐ 4.0 / 895 reviews. One of the most popular Up Garages. S13/S14/S15/AE86 parts in abundance. Next to a tyre centre. Dark inside but the stock is excellent — allow 1hr+. <strong>Closed Wednesdays.</strong></div>
+          <div class="sp">Budget: ¥5,000–¥50,000+</div>
+          <span class="tag t-upgarage">UP GARAGE</span>
+        </div>
+      </div>
+      <div class="stop s-autobacs">
+        <div class="si">🚗</div>
+        <div class="sc">
+          <div class="st">Autobacs Utsunomiya Nishi</div>
+          <div class="sd">2-19-5 Komanyu, Utsunomiya. ⭐ Large Autobacs — wide variety of car accessories and parts. Foreign staff available (English). Good for new accessories, wiper blades, car care, LED lights. Note: won't service lowered vehicles.</div>
+          <div class="sp">Budget: ¥1,000–¥8,000</div>
+          <span class="tag t-autobacs">AUTOBACS</span>
+        </div>
+      </div>
+    </div>
+    <div class="time-block">
+      <div class="time-label">🕧 12:30PM–1:30PM — Gyoza Lunch (MANDATORY)</div>
+      <div class="stop s-food">
+        <div class="si">🥟</div>
+        <div class="sc">
+          <div class="st">Utsunomiya Gyoza — Gyoza Street / Minmin / Masashi</div>
+          <div class="sd">Utsunomiya is Japan's gyoza capital. You CANNOT drive through here without stopping. Gyoza Street (Orion-dori) has multiple shops side by side. Minmin and Masashi are the famous names. A full gyoza set lunch is ¥800–¥1,300. The yaki-gyoza (pan-fried) here is life-changing.</div>
+          <div class="sp">¥1,100 est.</div>
+          <span class="tag t-food">GYOZA CITY</span><span class="tag t-food">MUST EAT</span>
+        </div>
+      </div>
+    </div>
+    <div class="time-block">
+      <div class="time-label">🕑 1:30PM–4:30PM — Mega Thrift Complex + Surugaya</div>
+      <div class="stop s-shop">
+        <div class="si">🛍️</div>
+        <div class="sc">
+          <div class="st">GarageOff / BookOff / HardOff / OffHouse Utsunomiya (Mega)</div>
+          <div class="sd">3-1-1 Nishikawatahoncho, Utsunomiya. ⭐ One of the largest Off-group complexes in the region. All four stores under one roof — wheels, games, books, action figures, clothing, furniture, tools. This alone could eat 2hrs. Budget accordingly.</div>
+          <div class="sp">Budget: ¥3,000–¥20,000</div>
+          <span class="tag t-hardoff">GARAGEOFF</span><span class="tag t-bookoff">BOOKOFF</span><span class="tag t-hardoff">HARDOFF</span><span class="tag t-hardoff">OFFHOUSE</span>
+        </div>
+      </div>
+      <div class="stop s-shop">
+        <div class="si">🏺</div>
+        <div class="sc">
+          <div class="st">Surugaya — MEGA Don Quijote La Park Utsunomiya (6F)</div>
+          <div class="sd">2-3-12 Babadori, Utsunomiya, 6F. Surugaya is Japan's best secondhand anime goods store — rare figures, Gunpla kits, idol merch, Pokémon cards, retro video games. Inside the MEGA Don Quijote building so you can hit Donki on the same stop. Stock varies wildly — always worth a look.</div>
+          <div class="sp">Budget: ¥2,000–¥15,000</div>
+          <span class="tag t-surugaya">SURUGAYA</span>
+        </div>
+      </div>
+      <div class="stop s-donki">
+        <div class="si">🦁</div>
+        <div class="sc">
+          <div class="st">MEGA Don Quijote Utsunomiya (La Park)</div>
+          <div class="sd">Same building as Surugaya — huge multi-floor MEGA Donki. This one is great for electronics and branded goods on top of the usual Donki chaos. Tax-free shopping available.</div>
+          <div class="sp">Budget: ¥2,000–¥10,000</div>
+          <span class="tag t-donki">MEGA DONKI</span>
+        </div>
+      </div>
+    </div>
+    <div class="time-block">
+      <div class="time-label">🕔 4:30PM–6PM — Treasure Factory + Taito Arcade</div>
+      <div class="stop s-shop">
+        <div class="si">💎</div>
+        <div class="sc">
+          <div class="st">Treasure Factory Tonarie Utsunomiya (2F)</div>
+          <div class="sd">1-4-6 Ekimae Dori, Utsunomiya, 2F. ⭐ 4.4 / 121 reviews. Premium recycle shop — well-organised fashion, shoes, watches, bags, Tomica/Plarail toys, models and figures. Higher-quality items than HardOff. Staff allowed luggage storage in reviews!</div>
+          <div class="sp">Budget: ¥1,000–¥10,000</div>
+          <span class="tag t-treasure">TREASURE FACTORY</span>
+        </div>
+      </div>
+      <div class="stop s-arcade">
+        <div class="si">🕹️</div>
+        <div class="sc">
+          <div class="st">Taito Station Utsunomiya Bel Mall / Tonarie</div>
+          <div class="sd">Two Taito Stations in Utsunomiya — Bel Mall (6-2-1 Yoto, 2F) and Tonarie (1-4-6 Ekimae Dori). Both have UFO catchers with anime/gaming prizes. Also has Purikura photo booths, medal games. Go for older machines — review says better odds on older prize sections.</div>
+          <div class="sp">Budget: ¥500–¥3,000</div>
+          <span class="tag t-arcade">TAITO STATION</span><span class="tag t-arcade">UFO CATCHER</span>
+        </div>
+      </div>
+    </div>
+    <div class="time-block">
+      <div class="time-label">🕖 6PM–7PM — Evening Donki Run + Hotel</div>
+      <div class="stop s-donki">
+        <div class="si">🦁</div>
+        <div class="sc">
+          <div class="st">Don Quijote APITA Utsunomiya</div>
+          <div class="sd">Second Donki in Utsunomiya near Esojima Station. Good for alcohol, snacks, and any last-minute clothing or tool purchases. Some stock is unique per-store so worth a second Donki visit.</div>
+          <div class="sp">Budget: ¥500–¥5,000</div>
+          <span class="tag t-donki">DONKI</span>
+        </div>
+      </div>
+    </div>
+    <div class="time-block">
+      <div class="time-label">🏨 Stay</div>
+      <div class="stop s-hotel">
+        <div class="si">🏨</div>
+        <div class="sc">
+          <div class="st">Hotel Route-Inn Utsunomiya</div>
+          <div class="sd">187-1 Miyukicho, Utsunomiya. ⭐ 3.6 / 583 reviews. Reliable chain, clean rooms, large communal bath, free parking. Back parking lot is larger and easier. Restaurants, convenience store and super bathhouse nearby.</div>
+          <div class="sp">¥7,500 est.</div>
+          <span class="tag t-hotel">HOTEL</span>
+        </div>
+      </div>
+    </div>
+    <div class="cost-box">
+      <h4>Day 3 Cost Breakdown</h4>
+      <div class="cr"><span class="cl">Car rental + ETC</span><span class="cv">¥7,500</span></div>
+      <div class="cr"><span class="cl">Expressway tolls (~100km Tohoku)</span><span class="cv">¥2,000</span></div>
+      <div class="cr"><span class="cl">Fuel (~120km)</span><span class="cv">¥1,800</span></div>
+      <div class="cr"><span class="cl">Hotel</span><span class="cv">¥7,500</span></div>
+      <div class="cr"><span class="cl">Food (gyoza feast + dinner)</span><span class="cv">¥2,800</span></div>
+      <div class="cr"><span class="cl">Arcade coins</span><span class="cv">¥1,500</span></div>
+      <div class="cr"><span class="cl">Day Total (ops only)</span><span class="cv">¥23,100</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ DAY 4 ═══════════════ -->
+<div class="day">
+  <div class="day-hdr" onclick="toggle(this)">
+    <div class="dn red">D4</div>
+    <div class="di"><h3>🚗 Utsunomiya → Koriyama — Into Fukushima</h3><p>Wed Nov 12 · 6+ stops — ⚠️ Up Garage CLOSED today</p></div>
+    <div class="dc"><div class="amt">¥22,500</div><div class="lbl">ops cost</div></div>
+    <span class="chv">▼</span>
+  </div>
+  <div class="day-body">
+    <div class="route-bar">Utsunomiya <span class="arr">→</span> <strong>Kuroiso</strong> (MEGA Donki stop) <span class="arr">→</span> <strong>Koriyama</strong> (~150km, ~2hr) <span class="arr">→</span> <strong>Stay: Koriyama</strong></div>
+    <div class="stop s-shop" style="border-color:#f6ad55;margin-bottom:10px">
+      <div class="si">⚠️</div>
+      <div class="sc">
+        <div class="st">Up Garage CLOSED on Wednesdays — Plan Around It</div>
+        <div class="sd">Wednesday is Up Garage's regular closing day across almost all stores. Fill today with Donki, HardOff, GEO, Autobacs and arcade stops instead. All HardOff/BookOff/Donki are open as normal.</div>
+        <span class="tag t-warn">⚠️ NO UP GARAGE TODAY</span>
+      </div>
+    </div>
+    <div class="time-block">
+      <div class="time-label">🕙 10AM–11AM — Kuroiso Pit Stop (en route)</div>
+      <div class="stop s-donki">
+        <div class="si">🦁</div>
+        <div class="sc">
+          <div class="st">MEGA Don Quijote Kuroiso</div>
+          <div class="sd">Near Kuroiso Station, off Route 4. Good pit stop en route to Koriyama. Full MEGA Donki stock — tools, outdoor gear, snacks, electronics. Grab coffee and road snacks here. Tax-free available.</div>
+          <div class="sp">Budget: ¥1,000–¥6,000</div>
+          <span class="tag t-donki">MEGA DONKI</span>
+        </div>
+      </div>
+    </div>
+    <div class="time-block">
+      <div class="time-label">🕧 12PM–2PM — Koriyama arrival, HardOff round 1</div>
+      <div class="stop s-shop">
+        <div class="si">🛍️</div>
+        <div class="sc">
+          <div class="st">HardOff + OffHouse Koriyama Shimokameda</div>
+          <div class="sd">4-56 Shimokameda, Koriyama. ⭐ 3.5 / 811 reviews. Large combined HardOff + OffHouse. Electronics, tools, clothing, household goods. Strong variety and good prices. Staff are friendly. Allow 45–60min.</div>
+          <div class="sp">Budget: ¥2,000–¥12,000</div>
+          <span class="tag t-hardoff">HARDOFF</span><span class="tag t-hardoff">OFFHOUSE</span>
+        </div>
+      </div>
+      <div class="stop s-food">
+        <div class="si">🍜</div>
+        <div class="sc">
+          <div class="st">Lunch — Koriyama city (ramen or teishoku)</div>
+          <div class="sd">Lots of options near the HardOff cluster. Try local Fukushima soba or a teishoku set meal. ¥800–¥1,300. Convenience store onigiri also acceptable — you've got a busy afternoon.</div>
+          <div class="sp">¥1,000 est.</div>
+          <span class="tag t-food">FOOD</span>
+        </div>
+      </div>
+    </div>
+    <div class="time-block">
+      <div class="time-label">🕑 2PM–4:30PM — Koriyama thrift sweep</div>
+      <div class="stop s-shop">
+        <div class="si">🛍️</div>
+        <div class="sc">
+          <div class="st">HardOff + OffHouse Koriyama Asaka</div>
+          <div class="sd">1-166 Asakamachi Arai, Koriyama. Second Koriyama HardOff — different stock rotation. Strong on bicycles and sports goods. Worth hitting both stores same day as they stock completely differently.</div>
+          <div class="sp">Budget: ¥1,000–¥8,000</div>
+          <span class="tag t-hardoff">HARDOFF</span>
+        </div>
+      </div>
+      <div class="stop s-shop">
+        <div class="si">🎮</div>
+        <div class="sc">
+          <div class="st">GEO Koriyama Unemedori</div>
+          <div class="sd">3-7-30 Asahi, Koriyama. GEO is a CD/DVD/game rental + used sales chain. Cheaper than BookOff on some games, good for retro consoles, secondhand smartphones, and capsule toy corner inside. Open until 11PM — great evening fallback. Allow 30min.</div>
+          <div class="sp">Budget: ¥1,000–¥8,000</div>
+          <span class="tag t-geo">GEO</span>
+        </div>
+      </div>
+      <div class="stop s-shop">
+        <div class="si">👕</div>
+        <div class="sc">
+          <div class="st">2nd Street Koriyama</div>
+          <div class="sd">Used clothing, branded sneakers, bags, outdoor gear. Good stock in Fukushima — less competition than Tokyo stores means more treasure hunting potential. Look for vintage Japan-market streetwear and sports brands.</div>
+          <div class="sp">Budget: ¥1,000–¥8,000</div>
+          <span class="tag t-2ndst">2ND STREET</span>
+        </div>
+      </div>
+    </div>
+    <div class="time-block">
+      <div class="time-label">🕔 4:30PM–6:30PM — Donki + Round1</div>
+      <div class="stop s-donki">
+        <div class="si">🦁</div>
+        <div class="sc">
+          <div class="st">Don Quijote Koriyama-Eki Higashi</div>
+          <div class="sd">10 min walk from Koriyama Station. Large Donki — good for tools, outdoor gear (warm layers for Ebisu!), electronics, snacks. Tax-free. Near the hotel zone so convenient for dropping bags first.</div>
+          <div class="sp">Budget: ¥2,000–¥10,000</div>
+          <span class="tag t-donki">DONKI</span>
+        </div>
+      </div>
+      <div class="stop s-arcade">
+        <div class="si">🕹️</div>
+        <div class="sc">
+          <div class="st">Round1 Stadium Koriyama</div>
+          <div class="sd">4-55 Mukaigawaramachi, Koriyama. ⭐ 3.5 / 1,273 reviews. Japan's best entertainment complex — bowling, karaoke, full arcade with UFO catchers, rhythm games, medal games. Open almost 24hrs on weekends. Bring ¥1,000–¥2,000 coins and go wild on the crane machines. Biggest prize selection in Koriyama.</div>
+          <div class="sp">Budget: ¥1,000–¥3,000</div>
+          <span class="tag t-arcade">ROUND1</span><span class="tag t-arcade">UFO CATCHER</span><span class="tag t-arcade">BOWLING</span>
+        </div>
+      </div>
+    </div>
+    <div class="time-block">
+      <div class="time-label">🏨 Stay</div>
+      <div class="stop s-hotel">
+        <div class="si">🏨</div>
+        <div class="sc">
+          <div class="st">Hotel Route-Inn Koriyama / Toyoko Inn Koriyama</div>
+          <div class="sd">Central Koriyama. Free parking, easy access to tomorrow's stores. Budget ¥6,000–¥8,000.</div>
+          <div class="sp">¥7,000 est.</div>
+          <span class="tag t-hotel">HOTEL</span>
+        </div>
+      </div>
+    </div>
+    <div class="cost-box">
+      <h4>Day 4 Cost Breakdown</h4>
+      <div class="cr"><span class="cl">Car rental + ETC</span><span class="cv">¥7,500</span></div>
+      <div class="cr"><span class="cl">Expressway tolls (~150km)</span><span class="cv">¥2,700</span></div>
+      <div class="cr"><span class="cl">Fuel (~170km)</span><span class="cv">¥2,500</span></div>
+      <div class="cr"><span class="cl">Hotel</span><span class="cv">¥7,000</span></div>
+      <div class="cr"><span class="cl">Food & drinks</span><span class="cv">¥2,500</span></div>
+      <div class="cr"><span class="cl">Arcade coins</span><span class="cv">¥1,500</span></div>
+      <div class="cr"><span class="cl">Day Total (ops only)</span><span class="cv">¥23,700</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ DAY 5 ═══════════════ -->
+<div class="day">
+  <div class="day-hdr" onclick="toggle(this)">
+    <div class="dn red">D5</div>
+    <div class="di"><h3>🏎️ Koriyama → Nihonmatsu — Drift Mecca Eve</h3><p>Thu Nov 13 · Up Garage Koriyama + Nihonmatsu + scout Ebisu</p></div>
+    <div class="dc"><div class="amt">¥25,000</div><div class="lbl">ops cost</div></div>
+    <span class="chv">▼</span>
+  </div>
+  <div class="day-body">
+    <div class="route-bar">Koriyama <span class="arr">→</span> <strong>Up Garage Koriyama</strong> <span class="arr">→</span> <strong>Nihonmatsu</strong> <span class="arr">→</span> <strong>Ebisu Circuit scout</strong> <span class="arr">→</span> <strong>Stay: mt. inn Dake Onsen</strong></div>
+    <div class="time-block">
+      <div class="time-label">🕙 10AM–12PM — Up Garage + Autobacs Koriyama</div>
+      <div class="stop s-auto">
+        <div class="si">🔧</div>
+        <div class="sc">
+          <div class="st">Up Garage Koriyama</div>
+          <div class="sd">1-6-5 Sakuragi, Koriyama. Now open (Thursday). The main Fukushima Up Garage — wheels, suspension, exhaust, interior. Very relevant stock for FR/drift builds as you're in Ebisu country now. Helpful staff, some Ebisu regulars sell parts here. <strong>Closed Wednesdays.</strong></div>
+          <div class="sp">Budget: ¥5,000–¥40,000+</div>
+          <span class="tag t-upgarage">UP GARAGE</span>
+        </div>
+      </div>
+      <div class="stop s-autobacs">
+        <div class="si">🚗</div>
+        <div class="sc">
+          <div class="st">Autobacs Koriyama</div>
+          <div class="sd">Large Autobacs near Koriyama city. Stock up on any last-minute car care or accessories. Good for drift-specific items like tie-down straps, fire extinguishers, and safety gear if you're participating at Ebisu.</div>
+          <div class="sp">Budget: ¥1,000–¥10,000</div>
+          <span class="tag t-autobacs">AUTOBACS</span>
+        </div>
+      </div>
+    </div>
+    <div class="time-block">
+      <div class="time-label">🕧 12PM–1PM — Drive to Nihonmatsu + Lunch</div>
+      <div class="stop s-food">
+        <div class="si">🍜</div>
+        <div class="sc">
+          <div class="st">Lunch en route — Nihonmatsu area</div>
+          <div class="sd">Stop at a local Fukushima restaurant on Route 4 or in Nihonmatsu city. Try local Fukushima specialties: Kitakata ramen style, horse sashimi, or Fukushima peach soft-serve if still in season.</div>
+          <div class="sp">¥1,000 est.</div>
+          <span class="tag t-food">FOOD</span>
+        </div>
+      </div>
+    </div>
+    <div class="time-block">
+      <div class="time-label">🕑 1PM–4PM — Nihonmatsu Thrift + Up Garage Nihonmatsu</div>
+      <div class="stop s-auto">
+        <div class="si">🔧</div>
+        <div class="sc">
+          <div class="st">Up Garage Nihonmatsu ⭐ THE ONE</div>
+          <div class="sd">Nihonmatsu City (oil well area, near the circuit). The closest Up Garage to Ebisu Circuit. This is a pilgrimage — Ebisu regulars sell parts here, track-used items cycle through constantly. S-chassis, AE86, JZX, GC8 parts everywhere. Budget extra time and extra money. Do not skip.</div>
+          <div class="sp">Budget: ¥5,000–¥80,000+</div>
+          <span class="tag t-upgarage">UP GARAGE ⭐</span><span class="tag t-warn">MUST VISIT</span>
+        </div>
+      </div>
+      <div class="stop s-shop">
+        <div class="si">👕</div>
+        <div class="sc">
+          <div class="st">2nd Street + local recycle shops — Nihonmatsu</div>
+          <div class="sd">Small 2nd Street and local recycle shops in Nihonmatsu town centre. Pick up warm used workwear (they're cheap here) for the cold Matsuri weekend outdoors — a thick flannel jacket from ¥500 will serve you well at Ebisu in November. Local stores often have unique stock.</div>
+          <div class="sp">Budget: ¥1,000–¥6,000</div>
+          <span class="tag t-2ndst">2ND STREET</span><span class="tag t-hardoff">LOCAL RECYCLE</span>
+        </div>
+      </div>
+    </div>
+    <div class="time-block">
+      <div class="time-label">🕓 4PM–5:30PM — Scout Ebisu Circuit</div>
+      <div class="stop" style="border-left:3px solid #e94560;background:#0f0f1a;display:flex;gap:9px;padding:8px 10px;border-radius:8px;margin-bottom:9px">
+        <div class="si">🏁</div>
+        <div class="sc">
+          <div class="st">Scout Ebisu Circuit + Buy Tickets</div>
+          <div class="sd">Drive up and walk the grounds. Buy spectator tickets at the gate (¥3,000 = ¥2,500 entry + ¥500 insurance). Check all 7 tracks, locate the best spectator spots, find the vendor area and parking. Practice laps may be running. Check out the drift missile "museum." Ask at Powervehicles/Team Orange about passenger rides for the weekend.</div>
+          <div class="sp">¥3,000 (spectator tickets x2 days)</div>
+          <span class="tag t-upgarage" style="background:#3a1a1a;color:#fc8181">EBISU CIRCUIT</span>
+        </div>
+      </div>
+    </div>
+    <div class="time-block">
+      <div class="time-label">🏨 Stay — mt. inn, Dake Onsen</div>
+      <div class="stop s-hotel">
+        <div class="si">🏨</div>
+        <div class="sc">
+          <div class="st">✅ mt. inn, Dake Onsen — CHECK IN</div>
+          <div class="sd">1-7 Dakeonsen, Nihonmatsu. ⭐ 4.1 / 491 reviews. THE Ebisu hotel. &lt;10 min drive to circuit. Natural sulfur onsen hot spring, bar, racing simulator (¥10/min) in lobby, great breakfast, friendly staff. Rooms from ¥8,000. Tattoo-friendly. <strong>BOOK MONTHS IN ADVANCE — sells out for Matsuri weekend.</strong> Check in, soak in the onsen, eat well. Big weekend ahead.</div>
+          <div class="sp">¥12,000–¥14,000 (Matsuri premium)</div>
+          <span class="tag t-hotel">MT. INN ⭐</span><span class="tag t-warn">BOOK EARLY!</span>
+        </div>
+      </div>
+    </div>
+    <div class="cost-box">
+      <h4>Day 5 Cost Breakdown</h4>
+      <div class="cr"><span class="cl">Car rental + ETC</span><span class="cv">¥7,500</span></div>
+      <div class="cr"><span class="cl">Expressway tolls (~40km)</span><span class="cv">¥800</span></div>
+      <div class="cr"><span class="cl">Fuel (~80km)</span><span class="cv">¥1,200</span></div>
+      <div class="cr"><span class="cl">Hotel (mt. inn)</span><span class="cv">¥13,000</span></div>
+      <div class="cr"><span class="cl">Food & drinks</span><span class="cv">¥2,500</span></div>
+      <div class="cr"><span class="cl">Ebisu spectator tickets</span><span class="cv">¥3,000</span></div>
+      <div class="cr"><span class="cl">Day Total (ops only)</span><span class="cv">¥28,000</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ DAY 6 — MATSURI ═══════════════ -->
+<div class="day matsuri">
+  <div class="day-hdr" onclick="toggle(this)">
+    <div class="dn fire">D6</div>
+    <div class="di"><h3>🔥 EBISU DRIFT MATSURI — DAY 1</h3><p>Sat Nov 14 · 9AM gates open — 31hrs of non-stop drifting begins</p></div>
+    <div class="dc"><div class="amt">¥25,000</div><div class="lbl">ops cost</div></div>
+    <span class="chv">▼</span>
+  </div>
+  <div class="day-body">
+    <div class="route-bar"><strong>Ebisu Circuit, Nihonmatsu</strong> — All 7 tracks · Night drifting · Vendors · Drift taxis · Passenger rides</div>
+    <div class="time-block">
+      <div class="time-label">🕗 7:30AM — Early arrival (beat the queue)</div>
+      <div class="stop" style="border-left:3px solid #e94560;background:#0f0f1a;display:flex;gap:9px;padding:8px 10px;border-radius:8px;margin-bottom:9px">
+        <div class="si">🌅</div>
+        <div class="sc">
+          <div class="st">Arrive Early — Gates Open 8AM</div>
+          <div class="sd">Queues form before 8AM. Arriving early means better parking (priority to drivers) and first access to vendor stalls. Green spectator wristband will be issued. Wear your warmest layers — Fukushima in November is cold from the morning.</div>
+        </div>
+      </div>
+    </div>
+    <div class="time-block">
+      <div class="time-label">🕘 9AM–Midnight+ — THE MATSURI</div>
+      <div class="stop" style="border-left:3px solid #e94560;background:#0f0f1a;display:flex;gap:9px;padding:8px 10px;border-radius:8px;margin-bottom:9px">
+        <div class="si">🏁</div>
+        <div class="sc">
+          <div class="st">Kita (North) Course — Best spectator spot</div>
+          <div class="sd">Cars pass within inches of spectators on the back stretch. Open 9AM–midnight Saturday. Get close, get loud. Bring earplugs if sensitive to noise — these cars are LOUD. Great photo spot.</div>
+          <span class="tag t-upgarage" style="background:#3a1a1a;color:#fc8181">KITA COURSE</span>
+        </div>
+      </div>
+      <div class="stop" style="border-left:3px solid #e94560;background:#0f0f1a;display:flex;gap:9px;padding:8px 10px;border-radius:8px;margin-bottom:9px">
+        <div class="si">🌙</div>
+        <div class="sc">
+          <div class="st">Night Drifting — After Dark</div>
+          <div class="sd">The Matsuri runs through the night. Night drifting under floodlights is one of the most surreal experiences in motorsport. Brave souls continue past midnight. The cold drops significantly — have your Donki-bought thermals on.</div>
+          <span class="tag t-upgarage" style="background:#3a1a1a;color:#fc8181">NIGHT DRIFT</span>
+        </div>
+      </div>
+      <div class="stop" style="border-left:3px solid #805ad5;background:#0f0f1a;display:flex;gap:9px;padding:8px 10px;border-radius:8px;margin-bottom:9px">
+        <div class="si">🚗</div>
+        <div class="sc">
+          <div class="st">Drift Taxi / Passenger Rides</div>
+          <div class="sd">Ask drivers for a passenger ride — international fans are warmly welcomed. Say 「同乗させてください！」 (Dojou sasete kudasai!) or just gesture enthusiastically. Rent a helmet at the circuit (required). Sideways Experience also offers paid passenger rides. Budget ¥3,000–¥10,000 depending on who you ride with.</div>
+          <div class="sp">Budget: ¥3,000–¥10,000</div>
+          <span class="tag t-arcade">DRIFT TAXI</span>
+        </div>
+      </div>
+      <div class="stop s-food">
+        <div class="si">🍺</div>
+        <div class="sc">
+          <div class="st">Circuit food, drinks & merchandise stalls</div>
+          <div class="sd">Ramen, yakitori, onigiri, beers, hot drinks. Merch stalls sell Ebisu Circuit gear, team merchandise, rare JDM goods. Budget ¥5,000–¥10,000 across the full day. This is also where you'll find circuit-exclusive items not sold elsewhere.</div>
+          <div class="sp">¥6,000 est. food + merch</div>
+          <span class="tag t-food">CIRCUIT VENDORS</span>
+        </div>
+      </div>
+    </div>
+    <div class="time-block">
+      <div class="time-label">🏨 Stay — mt. inn (Night 2)</div>
+      <div class="stop s-hotel">
+        <div class="si">🏨</div>
+        <div class="sc">
+          <div class="st">mt. inn Dake Onsen — Post-Matsuri Day 1</div>
+          <div class="sd">Drive back (10 min), straight into the onsen. The sulfur mineral water is perfect for the cold and exhaustion. Bar is open late for post-drift war stories. Racing sim in the lobby for late-night fun.</div>
+          <div class="sp">¥13,000</div>
+          <span class="tag t-hotel">MT. INN</span>
+        </div>
+      </div>
+    </div>
+    <div class="cost-box">
+      <h4>Day 6 Cost Breakdown</h4>
+      <div class="cr"><span class="cl">Car rental + ETC</span><span class="cv">¥7,500</span></div>
+      <div class="cr"><span class="cl">Hotel (mt. inn)</span><span class="cv">¥13,000</span></div>
+      <div class="cr"><span class="cl">Circuit food, drinks & merch</span><span class="cv">¥7,000</span></div>
+      <div class="cr"><span class="cl">Drift taxi/passenger ride</span><span class="cv">¥5,000</span></div>
+      <div class="cr"><span class="cl">Fuel (minimal)</span><span class="cv">¥300</span></div>
+      <div class="cr"><span class="cl">Day Total (ops only)</span><span class="cv">¥32,800</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ DAY 7 — MATSURI ═══════════════ -->
+<div class="day matsuri">
+  <div class="day-hdr" onclick="toggle(this)">
+    <div class="dn fire">D7</div>
+    <div class="di"><h3>🔥 EBISU DRIFT MATSURI — DAY 2 + Evening Thrift</h3><p>Sun Nov 15 · 9AM–4PM final sessions + local thrift sweep</p></div>
+    <div class="dc"><div class="amt">¥23,000</div><div class="lbl">ops cost</div></div>
+    <span class="chv">▼</span>
+  </div>
+  <div class="day-body">
+    <div class="route-bar"><strong>Ebisu Circuit</strong> (9AM–4PM) <span class="arr">→</span> <strong>Nihonmatsu/Koriyama evening thrift</strong> <span class="arr">→</span> <strong>Stay: mt. inn</strong></div>
+    <div class="time-block">
+      <div class="time-label">🕘 9AM–4PM — Matsuri Final Day</div>
+      <div class="stop" style="border-left:3px solid #e94560;background:#0f0f1a;display:flex;gap:9px;padding:8px 10px;border-radius:8px;margin-bottom:9px">
+        <div class="si">🏁</div>
+        <div class="sc">
+          <div class="st">Nishi (West) Course + Higashi (East) Course</div>
+          <div class="sd">Nishi course open 9AM–4PM both days. Famous for massive long drift trains in the final hour (3–4PM). Higashi is the high-speed long course — brings out the fastest setups. Chequered flag at 4PM. Emotional final run — the whole crowd gathers. Don't miss it.</div>
+          <span class="tag t-upgarage" style="background:#3a1a1a;color:#fc8181">NISHI COURSE</span><span class="tag t-upgarage" style="background:#3a1a1a;color:#fc8181">HIGASHI COURSE</span>
+        </div>
+      </div>
+    </div>
+    <div class="time-block">
+      <div class="time-label">🕓 4:30PM–7PM — Post-Matsuri Evening Thrift Sweep</div>
+      <div class="stop s-shop">
+        <div class="si">🏺</div>
+        <div class="sc">
+          <div class="st">BookOff Koriyama / GEO Koriyama (evening run)</div>
+          <div class="sd">Drive down to Koriyama (30 min) and hit BookOff and GEO Joshimizu (open until midnight!). Sunday evening stock is often freshly rotated. Good for picking up any games or media you spotted earlier but held off on. GEO has capsule toy corner too.</div>
+          <div class="sp">Budget: ¥1,000–¥8,000</div>
+          <span class="tag t-bookoff">BOOKOFF</span><span class="tag t-geo">GEO</span>
+        </div>
+      </div>
+      <div class="stop s-donki">
+        <div class="si">🦁</div>
+        <div class="sc">
+          <div class="st">Don Quijote Koriyama — Evening top-up</div>
+          <div class="sd">Restock snacks and drinks for the week ahead. Donki is great for cheap energy drinks, pocky, onigiri, and hot snacks. Also worth checking their tool section — Matsuri might have inspired you to buy something!</div>
+          <div class="sp">Budget: ¥1,000–¥4,000</div>
+          <span class="tag t-donki">DONKI</span>
+        </div>
+      </div>
+    </div>
+    <div class="time-block">
+      <div class="time-label">🏨 Stay — mt. inn (Night 3, final night)</div>
+      <div class="stop s-hotel">
+        <div class="si">🏨</div>
+        <div class="sc">
+          <div class="st">mt. inn Dake Onsen — Final Matsuri Night</div>
+          <div class="sd">Last night at the best hotel for Ebisu. Celebrate in the bar, do the onsen one more time. Sim racing in the lobby. Tomorrow the journey south begins.</div>
+          <div class="sp">¥13,000</div>
+          <span class="tag t-hotel">MT. INN</span>
+        </div>
+      </div>
+    </div>
+    <div class="cost-box">
+      <h4>Day 7 Cost Breakdown</h4>
+      <div class="cr"><span class="cl">Car rental + ETC</span><span class="cv">¥7,500</span></div>
+      <div class="cr"><span class="cl">Hotel (mt. inn)</span><span class="cv">¥13,000</span></div>
+      <div class="cr"><span class="cl">Circuit food & drinks</span><span class="cv">¥4,000</span></div>
+      <div class="cr"><span class="cl">Fuel (~70km)</span><span class="cv">¥1,000</span></div>
+      <div class="cr"><span class="cl">Day Total (ops only)</span><span class="cv">¥25,500</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ DAY 8 ═══════════════ -->
+<div class="day">
+  <div class="day-hdr" onclick="toggle(this)">
+    <div class="dn red">D8</div>
+    <div class="di"><h3>🛍️ Nihonmatsu → Koriyama — Post-Matsuri Big Sweep</h3><p>Mon Nov 16 · 6+ stops, Up Garage Koriyama + full thrift day</p></div>
+    <div class="dc"><div class="amt">¥21,000</div><div class="lbl">ops cost</div></div>
+    <span class="chv">▼</span>
+  </div>
+  <div class="day-body">
+    <div class="route-bar">Nihonmatsu <span class="arr">→</span> <strong>Koriyama</strong> (~30km) <span class="arr">→</span> <strong>Stay: Koriyama</strong></div>
+    <div class="time-block">
+      <div class="time-label">🕙 10AM–12PM — Up Garage + Autobacs</div>
+      <div class="stop s-auto">
+        <div class="si">🔧</div>
+        <div class="sc">
+          <div class="st">Up Garage Nihonmatsu — REVISIT</div>
+          <div class="sd">Stock changes constantly — Monday brings new stock as Matsuri participants sell parts before leaving. This is potentially the best day to find Ebisu-related parts. Post-Matsuri sell-offs are real — budget extra here.</div>
+          <div class="sp">Budget: ¥5,000–¥60,000+</div>
+          <span class="tag t-upgarage">UP GARAGE ⭐</span>
+        </div>
+      </div>
+      <div class="stop s-auto">
+        <div class="si">🔧</div>
+        <div class="sc">
+          <div class="st">Up Garage Koriyama</div>
+          <div class="sd">Stock refreshed since Thursday. Any parts you were on the fence about — commit now, you're heading south tomorrow. Last chance at Fukushima Up Garage pricing.</div>
+          <div class="sp">Budget: ¥3,000–¥20,000</div>
+          <span class="tag t-upgarage">UP GARAGE</span>
+        </div>
+      </div>
+    </div>
+    <div class="time-block">
+      <div class="time-label">🕧 12PM–2PM — HardOff fresh sweep</div>
+      <div class="stop s-food">
+        <div class="si">🍜</div>
+        <div class="sc">
+          <div class="st">Lunch — Koriyama ramen</div>
+          <div class="sd">Try a Koriyama local specialty — Kitakata-influenced ramen is big in Fukushima. Long flat noodles in a soy broth. Plenty of lunch spots near the HardOff cluster.</div>
+          <div class="sp">¥900 est.</div>
+          <span class="tag t-food">FOOD</span>
+        </div>
+      </div>
+      <div class="stop s-shop">
+        <div class="si">🛍️</div>
+        <div class="sc">
+          <div class="st">HardOff Koriyama (both stores — fresh Monday stock)</div>
+          <div class="sd">Monday stock rotation is common in Japanese recycle shops. Revisit both Shimokameda and Asaka stores with fresh eyes — what wasn't there Thursday might be there now. Budget for impulse buys.</div>
+          <div class="sp">Budget: ¥2,000–¥12,000</div>
+          <span class="tag t-hardoff">HARDOFF</span><span class="tag t-hardoff">OFFHOUSE</span>
+        </div>
+      </div>
+    </div>
+    <div class="time-block">
+      <div class="time-label">🕑 2PM–5PM — Surugaya + GEO + Round1</div>
+      <div class="stop s-shop">
+        <div class="si">🏺</div>
+        <div class="sc">
+          <div class="st">Surugaya Koriyama (if available)</div>
+          <div class="sd">Check for a Surugaya location in Koriyama — used anime goods, figures, Gunpla, Pokémon cards, retro games. Stock that BookOff doesn't carry. Great for last Fukushima figures hunt.</div>
+          <div class="sp">Budget: ¥1,000–¥10,000</div>
+          <span class="tag t-surugaya">SURUGAYA</span>
+        </div>
+      </div>
+      <div class="stop s-shop">
+        <div class="si">🎮</div>
+        <div class="sc">
+          <div class="st">GEO Koriyama Joshimizu</div>
+          <div class="sd">18 Shiroshimizu, Koriyama. Open until midnight! Second GEO visit — retro games, used consoles, smartphones, capsule toys. Late opening means you can squeeze this in after dinner if needed.</div>
+          <div class="sp">Budget: ¥1,000–¥8,000</div>
+          <span class="tag t-geo">GEO</span>
+        </div>
+      </div>
+      <div class="stop s-arcade">
+        <div class="si">🕹️</div>
+        <div class="sc">
+          <div class="st">Round1 Koriyama — Post-Matsuri celebration</div>
+          <div class="sd">Reward yourself after the Matsuri weekend. Bowl a few games, smash the UFO catchers, do karaoke. Great way to wind down. The crane machines here have the biggest prize selection in the city.</div>
+          <div class="sp">Budget: ¥1,500–¥4,000</div>
+          <span class="tag t-arcade">ROUND1</span><span class="tag t-arcade">UFO CATCHER</span>
+        </div>
+      </div>
+    </div>
+    <div class="time-block">
+      <div class="time-label">🏨 Stay</div>
+      <div class="stop s-hotel">
+        <div class="si">🏨</div>
+        <div class="sc">
+          <div class="st">Hotel Route-Inn or Toyoko Inn Koriyama</div>
+          <div class="sd">Back to Koriyama budget chain. Free parking, easy highway access for tomorrow's southbound run. ¥6,000–¥8,000.</div>
+          <div class="sp">¥7,000 est.</div>
+          <span class="tag t-hotel">HOTEL</span>
+        </div>
+      </div>
+    </div>
+    <div class="cost-box">
+      <h4>Day 8 Cost Breakdown</h4>
+      <div class="cr"><span class="cl">Car rental + ETC</span><span class="cv">¥7,500</span></div>
+      <div class="cr"><span class="cl">Expressway tolls</span><span class="cv">¥800</span></div>
+      <div class="cr"><span class="cl">Fuel (~80km)</span><span class="cv">¥1,200</span></div>
+      <div class="cr"><span class="cl">Hotel</span><span class="cv">¥7,000</span></div>
+      <div class="cr"><span class="cl">Food & drinks</span><span class="cv">¥2,500</span></div>
+      <div class="cr"><span class="cl">Arcade coins</span><span class="cv">¥2,000</span></div>
+      <div class="cr"><span class="cl">Day Total (ops only)</span><span class="cv">¥21,000</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ DAY 9 ═══════════════ -->
+<div class="day">
+  <div class="day-hdr" onclick="toggle(this)">
+    <div class="dn red">D9</div>
+    <div class="di"><h3>🚗 Koriyama → Utsunomiya — Southbound Haul</h3><p>Tue Nov 17 · 6+ stops, Treasure Factory + Riders Up Garage</p></div>
+    <div class="dc"><div class="amt">¥22,500</div><div class="lbl">ops cost</div></div>
+    <span class="chv">▼</span>
+  </div>
+  <div class="day-body">
+    <div class="route-bar">Koriyama <span class="arr">→</span> <strong>Utsunomiya</strong> (~120km, ~1.5hr) <span class="arr">→</span> <strong>Stay: Utsunomiya</strong></div>
+    <div class="time-block">
+      <div class="time-label">🕙 10AM–12:30PM — Up Garage Riders + Autobacs South</div>
+      <div class="stop s-auto">
+        <div class="si">🔧</div>
+        <div class="sc">
+          <div class="st">Up Garage Utsunomiya Inter Park (Riders)</div>
+          <div class="sd">6-2-9 Intapaaku, Utsunomiya. ⭐ 4.1 / 116 reviews. Motorcycle accessories — helmets, leathers, exhausts, mirrors, riding gear at fraction of retail. Attached to Bike World. Even if you don't ride, the gear finds here are impressive. Friendly staff even for non-Japanese speakers.</div>
+          <div class="sp">Budget: ¥2,000–¥20,000</div>
+          <span class="tag t-upgarage">UP GARAGE RIDERS</span>
+        </div>
+      </div>
+      <div class="stop s-autobacs">
+        <div class="si">🚗</div>
+        <div class="sc">
+          <div class="st">Autobacs Utsunomiya Minami</div>
+          <div class="sd">2-1300 Miyanouchi, Utsunomiya. ⭐ 3.6 / 576 reviews. Large Autobacs — reliable staff, full pit services. Good for any last-minute parts or accessories before heading further south. Oil change if needed.</div>
+          <div class="sp">Budget: ¥500–¥5,000</div>
+          <span class="tag t-autobacs">AUTOBACS</span>
+        </div>
+      </div>
+    </div>
+    <div class="time-block">
+      <div class="time-label">🕧 12:30PM–2PM — Surugaya + Lunch</div>
+      <div class="stop s-food">
+        <div class="si">🥟</div>
+        <div class="sc">
+          <div class="st">Gyoza lunch round 2 — you've earned it</div>
+          <div class="sd">You're back in Utsunomiya. Get gyoza again. You should. Budget ¥1,000–¥1,300.</div>
+          <div class="sp">¥1,100 est.</div>
+          <span class="tag t-food">GYOZA AGAIN</span>
+        </div>
+      </div>
+      <div class="stop s-shop">
+        <div class="si">🏺</div>
+        <div class="sc">
+          <div class="st">Surugaya Utsunomiya Techno (new location since Aug 2025)</div>
+          <div class="sd">4-1-39 Yuinomori, Utsunomiya, 2F. ⭐ Recently opened store. Figures, anime goods, Gunpla kits, idol merchandise, Pokémon cards, retro games. ~5 min walk from Yuinomori Nishi LRT station. New stock + recently opened = hidden gems still on shelf.</div>
+          <div class="sp">Budget: ¥2,000–¥15,000</div>
+          <span class="tag t-surugaya">SURUGAYA NEW</span>
+        </div>
+      </div>
+    </div>
+    <div class="time-block">
+      <div class="time-label">🕑 2PM–5PM — Treasure Factory + HardOff Station East</div>
+      <div class="stop s-shop">
+        <div class="si">💎</div>
+        <div class="sc">
+          <div class="st">Treasure Factory Interpark Village Utsunomiya</div>
+          <div class="sd">4-1-3 Intapaaku, Utsunomiya. ⭐ 4.6 / 84 reviews. Premium recycle shop — well-organised fashion, rare figures, Tomica/Plarail, models. Highest appraisal prices in the area (per reviews). Staff allowed luggage storage. Excellent quality control — no junk on the shelves.</div>
+          <div class="sp">Budget: ¥2,000–¥15,000</div>
+          <span class="tag t-treasure">TREASURE FACTORY ⭐</span>
+        </div>
+      </div>
+      <div class="stop s-shop">
+        <div class="si">🛍️</div>
+        <div class="sc">
+          <div class="st">HardOff Station East Utsunomiya</div>
+          <div class="sd">5-33-1 Yoto, Utsunomiya. Staff allowed customers to store luggage here while shopping — handy! Clothing 50% sales run regularly. Good electronics selection and household goods. Allow 45min.</div>
+          <div class="sp">Budget: ¥1,000–¥8,000</div>
+          <span class="tag t-hardoff">HARDOFF</span>
+        </div>
+      </div>
+    </div>
+    <div class="time-block">
+      <div class="time-label">🕔 5PM–7PM — Donki + Evening Arcade</div>
+      <div class="stop s-donki">
+        <div class="si">🦁</div>
+        <div class="sc">
+          <div class="st">MEGA Don Quijote Utsunomiya — Evening run</div>
+          <div class="sd">Revisit for anything you missed. Donki evening hours often have fresh food deals. Also check if you need to buy extra packaging materials for your haul — they sell cardboard boxes, bubble wrap, and tape.</div>
+          <div class="sp">Budget: ¥1,000–¥5,000</div>
+          <span class="tag t-donki">MEGA DONKI</span>
+        </div>
+      </div>
+      <div class="stop s-arcade">
+        <div class="si">🕹️</div>
+        <div class="sc">
+          <div class="st">Taito Station Utsunomiya Bel Mall — Evening session</div>
+          <div class="sd">Second visit this trip. Aim for the older prize sections (better odds per reviews). Purikura photo booth — get a memento of the trip. Also check the gacha machines for Love Live and other rare blind figures.</div>
+          <div class="sp">Budget: ¥500–¥2,000</div>
+          <span class="tag t-arcade">TAITO STATION</span><span class="tag t-arcade">UFO CATCHER</span>
+        </div>
+      </div>
+    </div>
+    <div class="time-block">
+      <div class="time-label">🏨 Stay</div>
+      <div class="stop s-hotel">
+        <div class="si">🏨</div>
+        <div class="sc">
+          <div class="st">Hotel Route-Inn Utsunomiya</div>
+          <div class="sd">Familiar and reliable. Free parking, communal bath. ¥7,000–¥7,500.</div>
+          <div class="sp">¥7,500 est.</div>
+          <span class="tag t-hotel">HOTEL</span>
+        </div>
+      </div>
+    </div>
+    <div class="cost-box">
+      <h4>Day 9 Cost Breakdown</h4>
+      <div class="cr"><span class="cl">Car rental + ETC</span><span class="cv">¥7,500</span></div>
+      <div class="cr"><span class="cl">Expressway tolls (~130km)</span><span class="cv">¥2,500</span></div>
+      <div class="cr"><span class="cl">Fuel (~150km)</span><span class="cv">¥2,200</span></div>
+      <div class="cr"><span class="cl">Hotel</span><span class="cv">¥7,500</span></div>
+      <div class="cr"><span class="cl">Food & drinks</span><span class="cv">¥2,600</span></div>
+      <div class="cr"><span class="cl">Arcade coins</span><span class="cv">¥1,500</span></div>
+      <div class="cr"><span class="cl">Day Total (ops only)</span><span class="cv">¥23,800</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ DAY 10 ═══════════════ -->
+<div class="day">
+  <div class="day-hdr" onclick="toggle(this)">
+    <div class="dn red">D10</div>
+    <div class="di"><h3>🚗 Utsunomiya → Tsukuba → Narita — Final Sweep</h3><p>Wed Nov 18 · 5+ stops, BookOff Super Bazaar + shipping haul</p></div>
+    <div class="dc"><div class="amt">¥21,500</div><div class="lbl">ops cost</div></div>
+    <span class="chv">▼</span>
+  </div>
+  <div class="day-body">
+    <div class="route-bar">Utsunomiya <span class="arr">→</span> <strong>Tsukuba/Hitachinaka</strong> <span class="arr">→</span> <strong>Chiba Makuhari</strong> <span class="arr">→</span> <strong>Narita area</strong> <span class="arr">→</span> <strong>Stay: near Narita</strong></div>
+    <div class="stop s-shop" style="border-color:#f6ad55;margin-bottom:10px">
+      <div class="si">⚠️</div>
+      <div class="sc">
+        <div class="st">Wednesday — Up Garage CLOSED again. Fill with other stores.</div>
+        <div class="sd">Final day of shopping — focus on BookOff Super Bazaar, the Chiba mega stores, and any items you've been putting off. Good day to ship boxes home via Yamato Transport.</div>
+        <span class="tag t-warn">⚠️ NO UP GARAGE TODAY</span>
+      </div>
+    </div>
+    <div class="time-block">
+      <div class="time-label">🕙 10AM–12PM — Hitachinaka Up Garage (if detour) + Tsukuba revisit</div>
+      <div class="stop s-shop">
+        <div class="si">📚</div>
+        <div class="sc">
+          <div class="st">BookOff Tsukuba — Final dig</div>
+          <div class="sd">Stock rotates weekly. Second visit to Tsukuba BookOff often turns up new ¥100 manga bargains, restocked figures, and games that weren't there last week. 30–45 min revisit is worth it.</div>
+          <div class="sp">Budget: ¥1,000–¥8,000</div>
+          <span class="tag t-bookoff">BOOKOFF</span>
+        </div>
+      </div>
+      <div class="stop s-shop">
+        <div class="si">🛍️</div>
+        <div class="sc">
+          <div class="st">Hard Off Tsukuba — Final junk dig</div>
+          <div class="sd">The junk section changes constantly. Quick 30 min sweep — anything from ¥100 is worth a look. Electronics junk section is the highlight. Don't skip if you have time.</div>
+          <div class="sp">Budget: ¥500–¥5,000</div>
+          <span class="tag t-hardoff">HARDOFF</span>
+        </div>
+      </div>
+    </div>
+    <div class="time-block">
+      <div class="time-label">🕧 12PM–2PM — Drive south + Lunch at service area</div>
+      <div class="stop s-food">
+        <div class="si">🍱</div>
+        <div class="sc">
+          <div class="st">Lunch at Expressway Service Area (SA)</div>
+          <div class="sd">Japanese expressway service areas are amazing — regional food, fresh ramen, teishoku sets, ekiben-style boxes. Much better than Australian service centres. Stop at any SA on the Ken-O Expwy or Chuo route south. Budget ¥1,000–¥1,500.</div>
+          <div class="sp">¥1,200 est.</div>
+          <span class="tag t-food">SERVICE AREA</span>
+        </div>
+      </div>
+    </div>
+    <div class="time-block">
+      <div class="time-label">🕑 2PM–5PM — Chiba Mega Stores</div>
+      <div class="stop s-shop">
+        <div class="si">📚</div>
+        <div class="sc">
+          <div class="st">BookOff Super Bazaar Chiba Makuhari ⭐</div>
+          <div class="sd">Near Makuhari Station, Chiba. One of the largest BookOff stores in the Kanto area. Everything: used kimono, designer bags, sporting equipment, K-pop merch, kitchen goods, games, books, 100¥ manga, electronics, second-hand clothing. Allow 1.5–2hrs. Less than 1hr from Narita. The best final mega-store stop.</div>
+          <div class="sp">Budget: ¥3,000–¥25,000</div>
+          <span class="tag t-bookoff">BOOKOFF SUPER BAZAAR ⭐</span>
+        </div>
+      </div>
+      <div class="stop s-shop">
+        <div class="si">💎</div>
+        <div class="sc">
+          <div class="st">Hard Off / HobbyOff Tomisato Inter — Farewell visit</div>
+          <div class="sd">Full circle — start and end at the same store. You'll see it differently now after 10 days of calibration. Stock rotates, so there may be new finds from last week's sell-ins.</div>
+          <div class="sp">Budget: ¥500–¥8,000</div>
+          <span class="tag t-hardoff">HARDOFF</span><span class="tag t-hardoff">HOBBYOFF</span>
+        </div>
+      </div>
+    </div>
+    <div class="time-block">
+      <div class="time-label">🕔 5PM–7PM — Shipping + Donki Narita</div>
+      <div class="stop" style="border-left:3px solid #805ad5;background:#0f0f1a;display:flex;gap:9px;padding:8px 10px;border-radius:8px;margin-bottom:9px">
+        <div class="si">📦</div>
+        <div class="sc">
+          <div class="st">Yamato Transport (クロネコヤマト) — Ship your haul</div>
+          <div class="sd">Any convenience store (7-Eleven, Lawson, FamilyMart) accepts Yamato Transport boxes for international shipping. International EMS boxes to Australia: ~¥3,000–¥10,000/box depending on weight. Much easier than trying to fit everything in your luggage. Ask at the counter for 「国際宅急便」(kokusai takkyubin).</div>
+          <div class="sp">¥0–¥30,000 (optional)</div>
+          <span class="tag t-arcade" style="background:#2a1a4a;color:#d6bcfa">YAMATO SHIPPING</span>
+        </div>
+      </div>
+      <div class="stop s-donki">
+        <div class="si">🦁</div>
+        <div class="sc">
+          <div class="st">Don Quijote Narita — Final Donki run</div>
+          <div class="sd">Last Donki of the trip. Pick up omiyage (souvenirs) — Japanese Kit-Kats, Pocky sets, regional snacks, cosmetics. Tax-free with passport. Great for last-minute gift shopping before departure tomorrow.</div>
+          <div class="sp">Budget: ¥2,000–¥8,000</div>
+          <span class="tag t-donki">DONKI FAREWELL</span>
+        </div>
+      </div>
+    </div>
+    <div class="time-block">
+      <div class="time-label">🏨 Stay — Near Narita Airport</div>
+      <div class="stop s-hotel">
+        <div class="si">🏨</div>
+        <div class="sc">
+          <div class="st">APA Hotel or Dormy Inn Narita</div>
+          <div class="sd">Position yourself near the airport for easy morning departure. Free parking. Alarm set early — return car, shuttle, check-in, done. ¥6,000–¥8,000.</div>
+          <div class="sp">¥7,000 est.</div>
+          <span class="tag t-hotel">HOTEL</span>
+        </div>
+      </div>
+    </div>
+    <div class="cost-box">
+      <h4>Day 10 Cost Breakdown</h4>
+      <div class="cr"><span class="cl">Car rental + ETC</span><span class="cv">¥7,500</span></div>
+      <div class="cr"><span class="cl">Expressway tolls (~160km)</span><span class="cv">¥2,800</span></div>
+      <div class="cr"><span class="cl">Fuel (~180km)</span><span class="cv">¥2,700</span></div>
+      <div class="cr"><span class="cl">Hotel</span><span class="cv">¥7,000</span></div>
+      <div class="cr"><span class="cl">Food & drinks</span><span class="cv">¥2,500</span></div>
+      <div class="cr"><span class="cl">Day Total (ops only)</span><span class="cv">¥22,500</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ DAY 11 ═══════════════ -->
+<div class="day">
+  <div class="day-hdr" onclick="toggle(this)">
+    <div class="dn red">D11</div>
+    <div class="di"><h3>✈️ Departure Day — Return Car & Fly Home</h3><p>Thu Nov 19 · Narita Airport drop-off, fly Perth via connection</p></div>
+    <div class="dc"><div class="amt">¥11,000</div><div class="lbl">ops cost</div></div>
+    <span class="chv">▼</span>
+  </div>
+  <div class="day-body">
+    <div class="route-bar">Narita area hotel <span class="arr">→</span> <strong>Fuel up</strong> <span class="arr">→</span> <strong>Return rental car</strong> <span class="arr">→</span> <strong>Narita Terminal</strong> <span class="arr">→</span> ✈️ Home</div>
+    <div class="stop s-drive">
+      <div class="si">⛽</div>
+      <div class="sc">
+        <div class="st">Fill the tank — Return rental car</div>
+        <div class="sd">Fill the tank at the petrol station on the Narita Access Road before returning. Keep the receipt — some companies require proof of refuel. Allow 1.5–2hrs before check-in for the rental return shuttle (15 min) and airport check-in. Return the ETC card with the vehicle.</div>
+        <div class="sp">¥2,000 est. fuel fill</div>
+        <span class="tag t-hardoff" style="background:#2d3748;color:#a0aec0">CAR RETURN</span>
+      </div>
+    </div>
+    <div class="stop s-donki">
+      <div class="si">🛍️</div>
+      <div class="sc">
+        <div class="st">Narita Airport Duty Free + BookOff Narita (if time)</div>
+        <div class="sd">BookOff AEON Narita is minutes from the airport — one final ¥100 manga hunt if your flight is later in the day. Airport duty free for alcohol, cosmetics and snacks. Narita is a great airport for last-minute shopping.</div>
+        <div class="sp">Budget: ¥1,000–¥10,000</div>
+        <span class="tag t-bookoff">BOOKOFF</span><span class="tag t-donki">DUTY FREE</span>
+      </div>
+    </div>
+    <div class="cost-box">
+      <h4>Day 11 Cost Breakdown</h4>
+      <div class="cr"><span class="cl">Final car rental day</span><span class="cv">¥7,500</span></div>
+      <div class="cr"><span class="cl">Final fuel fill</span><span class="cv">¥2,000</span></div>
+      <div class="cr"><span class="cl">Airport food & last shops</span><span class="cv">¥2,500</span></div>
+      <div class="cr"><span class="cl">Day Total</span><span class="cv">¥12,000</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- GRAND TOTAL -->
+<div class="grand">
+  <h2>💴 Total Estimated Operational Budget</h2>
+  <div class="gjpy">¥ 334,600</div>
+  <div class="gaud">≈ AUD $3,450 (at ¥97/AUD)</div>
+  <div class="gnote">Excludes shopping/parts/figures budget. International flights not included.</div>
+  <div class="grand-grid">
+    <div class="gi"><div class="gl">🚗 Car Rental × 11 + ETC</div><div class="gv">¥82,500</div></div>
+    <div class="gi"><div class="gl">🛣️ Expressway Tolls</div><div class="gv">¥19,700</div></div>
+    <div class="gi"><div class="gl">⛽ Fuel (~1,100km)</div><div class="gv">¥17,000</div></div>
+    <div class="gi"><div class="gl">🏨 Hotels × 10 nights</div><div class="gv">¥87,000</div></div>
+    <div class="gi"><div class="gl">🍜 Food & Drinks</div><div class="gv">¥26,300</div></div>
+    <div class="gi"><div class="gl">🕹️ Arcade coins</div><div class="gv">¥13,500</div></div>
+    <div class="gi"><div class="gl">🏁 Matsuri tickets</div><div class="gv">¥3,000</div></div>
+    <div class="gi"><div class="gl">🛍️ Shopping budget*</div><div class="gv">¥100,000–¥300,000+</div></div>
+  </div>
+</div>
+
+<!-- TIPS -->
+<div class="notes">
+  <h3>📋 Key Tips & Reminders</h3>
+  <ul>
+    <li><strong>2026 Autumn Matsuri confirmed Nov 14–15</strong> — matches your dates perfectly. Check official Ebisu Circuit website closer to date for any updates.</li>
+    <li><strong>Book mt. inn Dake Onsen NOW</strong> — sells out 3–6 months ahead for Matsuri weekends. It's the best reviewed Ebisu hotel and less than 10 min from the circuit.</li>
+    <li><strong>Up Garage is CLOSED every Wednesday</strong> — Days 4 and 10 are on Wednesdays, planned accordingly.</li>
+    <li><strong>Bring your passport everywhere</strong> — HardOff, BookOff, Surugaya, Donki all offer 10% tax-free over ¥5,000.</li>
+    <li><strong>Get an ETC card with your rental</strong> (¥500/day) — discounts on night/weekend expressway driving, no stopping at tolls, saves time and money.</li>
+    <li><strong>Ebisu in November is COLD</strong> — buy cheap thermals, gloves and a beanie at Donki early in the trip. November nights in Fukushima drop below 5°C.</li>
+    <li><strong>UFO Catcher tips:</strong> Watch 2–3 plays before spending money. Target older prize sections for better odds. Ask staff for an 「アシスト」(assist) if stuck — they'll help position the prize. Budget ¥500–¥1,000 per session.</li>
+    <li><strong>Yamato Transport shipping:</strong> Available at any convenience store. Ship boxes to your Australian address before flying. Much cheaper and easier than extra baggage fees.</li>
+    <li><strong>Round1 Stadium</strong> — Japan's best entertainment complex. Bowling, karaoke, arcades, batting cages. Budget ¥2,000–¥4,000 for a full evening session.</li>
+    <li><strong>GEO stores</strong> are often open until midnight — great for evening gaming or capsule toy runs after dinner when other stores close.</li>
+    <li>Exchange rate: ¥97/AUD used — verify current rates before travel. Carry some cash (¥50,000 minimum) as smaller stores are cash-only.</li>
+  </ul>
+</div>
+</div>
+
+<script>
+function toggle(hdr) {
+  const body = hdr.nextElementSibling;
+  const chv = hdr.querySelector('.chv');
+  const open = body.classList.toggle('open');
+  chv.classList.toggle('open', open);
+}
+function toggleAll() {
+  const bodies = document.querySelectorAll('.day-body');
+  const chevs = document.querySelectorAll('.chv');
+  const btn = document.querySelector('.open-all-btn');
+  const anyOpen = [...bodies].some(b => b.classList.contains('open'));
+  bodies.forEach(b => b.classList.toggle('open', !anyOpen));
+  chevs.forEach(c => c.classList.toggle('open', !anyOpen));
+  btn.textContent = anyOpen ? '⬇ Expand All Days' : '⬆ Collapse All Days';
+}
+</script>
+</body>
+</html>
