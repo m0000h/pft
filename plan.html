@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your Complete Wellness Plan</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,sans-serif;background:#f5f5f0;color:#1a1a18;font-size:14px}
+.app{max-width:740px;margin:0 auto;padding:1rem}
+.app-title{font-size:20px;font-weight:600;color:#1a1a18;margin-bottom:4px}
+.app-sub{font-size:12px;color:#888;margin-bottom:1.25rem}
+/* nav */
+.nav{display:flex;gap:5px;margin-bottom:1.25rem;flex-wrap:wrap}
+.nav-btn{font-size:12px;padding:6px 14px;border-radius:8px;border:1px solid #d0cec4;cursor:pointer;background:#fff;color:#555;transition:all .15s;white-space:nowrap}
+.nav-btn.on{background:#1a1a18;color:#fff;border-color:#1a1a18}
+.page{display:none}.page.on{display:block}
+/* section headers */
+h2{font-size:14px;font-weight:600;border-bottom:1px solid #e0ddd6;padding-bottom:6px;margin-bottom:10px;color:#1a1a18}
+h3{font-size:13px;font-weight:600;margin-bottom:8px}
+/* tabs */
+.tab-row{display:flex;gap:5px;margin-bottom:10px;flex-wrap:wrap}
+.tab{font-size:11px;padding:4px 12px;border-radius:99px;border:1px solid #d0cec4;cursor:pointer;background:#fff;color:#666;transition:all .15s}
+.tab.on{background:#1a1a18;color:#fff;border-color:#1a1a18}
+.tpanel{display:none}.tpanel.on{display:block}
+/* day tabs */
+.dtab-row{display:flex;gap:5px;margin-bottom:10px;flex-wrap:wrap}
+.dtab{font-size:11px;padding:4px 12px;border-radius:99px;border:1px solid #d0cec4;cursor:pointer;background:#fff;color:#666;transition:all .15s}
+.dtab.on{background:#e6f1fb;color:#0c447c;border-color:#85b7eb;font-weight:600}
+.dpanel{display:none}.dpanel.on{display:block}
+/* cards */
+.card{background:#fff;border:1px solid #e0ddd6;border-radius:10px;padding:1rem 1.1rem;margin-bottom:10px}
+.card-sm{background:#fff;border:1px solid #e0ddd6;border-radius:8px;padding:.75rem}
+/* grids */
+.g2{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.gex{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:8px}
+@media(max-width:500px){.g2,.g3,.g4{grid-template-columns:1fr}}
+/* timeline */
+.timeline{display:flex;flex-direction:column}
+.tl-row{display:flex;gap:10px;align-items:stretch}
+.tl-left{display:flex;flex-direction:column;align-items:center;min-width:60px}
+.tl-time{font-size:10px;font-weight:600;color:#888;white-space:nowrap;padding-top:2px}
+.tl-dot{width:9px;height:9px;border-radius:50%;margin:5px 0 0;flex-shrink:0}
+.tl-line{flex:1;width:1.5px;background:#e0ddd6;margin:0 auto}
+.tl-body{flex:1;margin-bottom:8px;border-radius:8px;padding:.65rem .9rem;border:1px solid}
+.tl-name{font-size:12px;font-weight:600}
+.tl-detail{font-size:11px;color:inherit;margin-top:2px;line-height:1.5;opacity:.85}
+.am{background:#faeeda;border-color:#fac775;color:#633806}
+.wk{background:#e6f1fb;border-color:#b5d4f4;color:#0c447c}
+.af{background:#eaf3de;border-color:#c0dd97;color:#27500a}
+.ev{background:#eeedfe;border-color:#cecbf6;color:#3c3489}
+.sl{background:#e1f5ee;border-color:#9fe1cb;color:#085041}
+.dot-am{background:#ef9f27}.dot-wk{background:#378add}.dot-af{background:#639922}.dot-ev{background:#7f77dd}.dot-sl{background:#1d9e75}
+/* principle cards */
+.princ{background:#f5f5f0;border:1px solid #e0ddd6;border-radius:8px;padding:.75rem}
+.princ-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:#888;margin-bottom:3px}
+.princ-text{font-size:11px;color:#444;line-height:1.5}
+/* env cards */
+.env-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:#888;margin-bottom:2px}
+.env-val{font-size:13px;font-weight:600;color:#1a1a18;margin-bottom:2px}
+.env-note{font-size:11px;color:#666;line-height:1.5}
+/* tips list */
+.tip-row{display:flex;gap:8px;padding:.6rem .9rem;background:#fff;border-radius:8px;border:1px solid #e0ddd6;margin-bottom:6px;align-items:flex-start}
+.tip-badge{font-size:10px;font-weight:700;white-space:nowrap;padding:2px 8px;border-radius:99px;margin-top:1px}
+.bg-g{background:#eaf3de;color:#27500a}
+.bg-r{background:#fcebeb;color:#501313}
+.bg-b{background:#e6f1fb;color:#0c447c}
+.tip-text{font-size:12px;color:#333;line-height:1.5}
+/* tracker */
+.tr-row{display:flex;align-items:center;gap:10px;background:#fff;border-radius:8px;padding:.6rem .9rem;border:1px solid #e0ddd6;margin-bottom:6px}
+.tr-label{font-size:12px;font-weight:500;flex:1}
+.tr-dots{display:flex;gap:4px}
+.tr-dot{width:14px;height:14px;border-radius:50%;border:1px solid #d0cec4;cursor:pointer;transition:background .12s}
+.tr-dot.on{background:#378add;border-color:#85b7eb}
+/* warn */
+.warn{background:#faeeda;border:1px solid #fac775;border-radius:8px;padding:.75rem 1rem;margin-top:8px}
+.warn-title{font-size:12px;font-weight:600;color:#633806;margin-bottom:3px}
+.warn-text{font-size:11px;color:#854f0b;line-height:1.55}
+/* info */
+.info{background:#e6f1fb;border:1px solid #b5d4f4;border-radius:8px;padding:.75rem 1rem;margin-top:8px}
+.info-title{font-size:12px;font-weight:600;color:#0c447c;margin-bottom:3px}
+.info-text{font-size:11px;color:#185fa5;line-height:1.55}
+/* meals */
+.mc{border-radius:8px;border:1px solid #ddd;padding:.75rem}
+.mc-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;margin-bottom:3px}
+.mc-name{font-size:12px;font-weight:600;color:#1a1a18;margin-bottom:3px}
+.mc-detail{font-size:11px;color:#666;line-height:1.5}
+.bk{background:#faeeda;border-color:#fac775}.bk .mc-label{color:#633806}
+.ln{background:#e6f1fb;border-color:#b5d4f4}.ln .mc-label{color:#0c447c}
+.dn{background:#eaf3de;border-color:#c0dd97}.dn .mc-label{color:#27500a}
+.sn{background:#eeedfe;border-color:#cecbf6}.sn .mc-label{color:#3c3489}
+/* macro */
+.macro-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}
+.macro-card{background:#fff;border:1px solid #e0ddd6;border-radius:8px;padding:.75rem;text-align:center}
+.macro-val{font-size:15px;font-weight:600;margin-bottom:2px}
+.macro-lbl{font-size:10px;color:#888}
+/* pills */
+.pill-row{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:12px}
+.pill{font-size:11px;padding:3px 9px;border-radius:99px;font-weight:500}
+.pg{background:#eaf3de;color:#27500a}
+.pr{background:#fcebeb;color:#501313}
+/* week grid */
+.week-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:14px}
+.wday{background:#fff;border:1px solid #e0ddd6;border-radius:8px;padding:6px 3px;text-align:center}
+.wday-name{font-size:10px;font-weight:600;color:#888;margin-bottom:3px}
+.wday-type{font-size:10px;font-weight:600}
+.wtc{color:#185fa5}.wth{color:#993c1d}.wts{color:#3b6d11}.wtr{color:#888}.wta{color:#534ab7}
+.dot{width:7px;height:7px;border-radius:50%;margin:3px auto 0}
+.dc{background:#378add}.dh{background:#d85a30}.ds{background:#639922}.dr{background:#b4b2a9}.da{background:#7f77dd}
+/* exercise */
+.ex-block{margin-bottom:14px}
+.ex-card{background:#fff;border:1px solid #e0ddd6;border-radius:8px;padding:.7rem}
+.ex-name{font-size:12px;font-weight:600;color:#1a1a18;margin-bottom:2px}
+.ex-meta{font-size:11px;font-weight:600;margin-bottom:3px}
+.ex-tip{font-size:11px;color:#666;line-height:1.5}
+.metac{color:#185fa5}.metah{color:#993c1d}.metas{color:#3b6d11}
+/* stretch */
+.stretch-item{padding:.65rem 0;border-bottom:1px solid #e8e6e0}
+.stretch-item:last-child{border-bottom:none}
+.sh{display:flex;align-items:center;gap:8px;margin-bottom:3px}
+.snum{width:24px;height:24px;border-radius:50%;background:#eeedfe;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#3c3489;flex-shrink:0}
+.sname{font-size:12px;font-weight:600;color:#1a1a18}
+.sdur{font-size:11px;font-weight:600;color:#534ab7;margin-left:auto;white-space:nowrap}
+.sdesc{font-size:11px;color:#555;line-height:1.55;padding-left:32px}
+/* wind-down activities */
+.wd-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px}
+.wd-card{background:#fff;border:1px solid #e0ddd6;border-radius:8px;padding:.7rem;text-align:center}
+.wd-name{font-size:12px;font-weight:600;color:#1a1a18;margin-bottom:3px}
+.wd-tip{font-size:11px;color:#666;line-height:1.4}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="app-title">Your Complete Wellness Plan</div>
+  <div class="app-sub">Sleep optimisation · Belly fat loss · Exercise · Wind-down — tailored for 5:45 am starts</div>
+
+  <div class="nav">
+    <div class="nav-btn on" onclick="showPage('sleep',this)">Sleep plan</div>
+    <div class="nav-btn" onclick="showPage('meals',this)">Meal plan</div>
+    <div class="nav-btn" onclick="showPage('exercise',this)">Exercise plan</div>
+    <div class="nav-btn" onclick="showPage('stretch',this)">Wind-down stretches</div>
+  </div>
+
+  <!-- ===================== SLEEP PAGE ===================== -->
+  <div class="page on" id="pg-sleep">
+    <div class="card" style="margin-bottom:10px">
+      <h2 style="border:none;margin-bottom:6px">Overall goal</h2>
+      <div style="font-size:12px;color:#444;line-height:1.65">Build a sustainable daily rhythm that syncs with your early schedule — helping you fall asleep faster, stay asleep longer, and wake up genuinely refreshed. The focus is on small, consistent habits that compound over time, not overnight fixes.</div>
+    </div>
+
+    <h2>Key principles</h2>
+    <div class="g2" style="margin-bottom:14px">
+      <div class="princ"><div class="princ-label">Consistency</div><div class="princ-text">Same wake and bed times every day — including weekends. Your body clock is trained by regularity above all else.</div></div>
+      <div class="princ"><div class="princ-label">Light exposure</div><div class="princ-text">Morning sunlight anchors your circadian rhythm. Evening screen light delays it. Both matter enormously.</div></div>
+      <div class="princ"><div class="princ-label">Sleep pressure</div><div class="princ-text">Adenosine builds all day. Protect it — avoid long naps and caffeine after midday.</div></div>
+      <div class="princ"><div class="princ-label">Wind-down ritual</div><div class="princ-text">Your nervous system needs a transition signal. A consistent 60–90 min pre-bed routine trains your body to shift into sleep mode.</div></div>
+    </div>
+
+    <h2>Daily schedule</h2>
+    <div class="timeline">
+      <div class="tl-row"><div class="tl-left"><div class="tl-time">4:45 am</div><div class="tl-dot dot-am"></div><div class="tl-line"></div></div><div class="tl-body am"><div class="tl-name">Wake up — consistent every day</div><div class="tl-detail">Same time 7 days a week. The single most important anchor. Get up on the first alarm.</div></div></div>
+      <div class="tl-row"><div class="tl-left"><div class="tl-time">4:45–5:30</div><div class="tl-dot dot-am"></div><div class="tl-line"></div></div><div class="tl-body am"><div class="tl-name">Morning routine</div><div class="tl-detail">Drink 2 glasses of water immediately. Step outside briefly for early light exposure. Light breakfast. Hold caffeine until 5:00 am minimum.</div></div></div>
+      <div class="tl-row"><div class="tl-left"><div class="tl-time">5:45 am</div><div class="tl-dot dot-wk"></div><div class="tl-line"></div></div><div class="tl-body wk"><div class="tl-name">Leave for work</div><div class="tl-detail">Outdoor or windowed commute provides valuable light exposure. Avoid heavy meals before departure.</div></div></div>
+      <div class="tl-row"><div class="tl-left"><div class="tl-time">At work</div><div class="tl-dot dot-wk"></div><div class="tl-line"></div></div><div class="tl-body wk"><div class="tl-name">Workday energy management</div><div class="tl-detail">Stay hydrated. Move every 60–90 min. Last caffeine by 10:00–10:30 am. Protein-rich lunch at midday prevents afternoon crashes.</div></div></div>
+      <div class="tl-row"><div class="tl-left"><div class="tl-time">3:00 pm</div><div class="tl-dot dot-af"></div><div class="tl-line"></div></div><div class="tl-body af"><div class="tl-name">Home — decompress first</div><div class="tl-detail">Change clothes, drink water, spend 10–15 min doing nothing demanding. Signal to your body that work mode is ending.</div></div></div>
+      <div class="tl-row"><div class="tl-left"><div class="tl-time">3:30–5:00</div><div class="tl-dot dot-af"></div><div class="tl-line"></div></div><div class="tl-body af"><div class="tl-name">Exercise window</div><div class="tl-detail">Ideal slot — body temp and cortisol return to baseline well before bed. See the Exercise page for your full plan.</div></div></div>
+      <div class="tl-row"><div class="tl-left"><div class="tl-time">5:30–6:30</div><div class="tl-dot dot-af"></div><div class="tl-line"></div></div><div class="tl-body af"><div class="tl-name">Dinner</div><div class="tl-detail">Main meal here — at least 2.5 hours before bed. Avoid large, heavy, or spicy meals after 6:30 pm. See Meal Plan for ideas.</div></div></div>
+      <div class="tl-row"><div class="tl-left"><div class="tl-time">7:00 pm</div><div class="tl-dot dot-ev"></div><div class="tl-line"></div></div><div class="tl-body ev"><div class="tl-name">Begin dimming environment</div><div class="tl-detail">Switch to lamps or warm-toned bulbs. Avoid stressful news, work emails, or heated conversations.</div></div></div>
+      <div class="tl-row"><div class="tl-left"><div class="tl-time">7:30–8:15</div><div class="tl-dot dot-ev"></div><div class="tl-line"></div></div><div class="tl-body ev"><div class="tl-name">Wind-down ritual</div><div class="tl-detail">Screens off. Stretching, reading, breathing. See Wind-down Stretches page for the full routine.</div></div></div>
+      <div class="tl-row"><div class="tl-left"><div class="tl-time">8:30 pm</div><div class="tl-dot dot-sl"></div><div class="tl-line"></div></div><div class="tl-body sl"><div class="tl-name">Target bedtime — lights out</div><div class="tl-detail">8 hours before your 4:45 am wake-up. No screens, no phone. If sleep doesn't come in 20 min, do a quiet activity in dim light then return.</div></div></div>
+    </div>
+
+    <h2 style="margin-top:14px">Sleep environment</h2>
+    <div class="g2" style="margin-bottom:14px">
+      <div class="card-sm"><div class="env-lbl">Temperature</div><div class="env-val">17–19°C</div><div class="env-note">Core body temp must drop to initiate sleep. Use a fan — Perth summers may need A/C.</div></div>
+      <div class="card-sm"><div class="env-lbl">Light</div><div class="env-val">Complete darkness</div><div class="env-note">Blackout curtains or a quality sleep mask. Cover all LED standby lights.</div></div>
+      <div class="card-sm"><div class="env-lbl">Sound</div><div class="env-val">Quiet or white noise</div><div class="env-note">Silence is ideal. Earplugs or a white noise machine to mask unavoidable noise.</div></div>
+      <div class="card-sm"><div class="env-lbl">Bed use</div><div class="env-val">Sleep &amp; sex only</div><div class="env-note">No TV, phone, or work in bed. Train your brain to associate bed exclusively with sleep.</div></div>
+    </div>
+
+    <h2>Diet &amp; hydration</h2>
+    <div style="margin-bottom:14px">
+      <div class="tip-row"><span class="tip-badge bg-g">Eat</span><span class="tip-text">Tryptophan-rich foods at dinner: chicken, turkey, eggs, dairy, nuts. These are melatonin precursors.</span></div>
+      <div class="tip-row"><span class="tip-badge bg-g">Drink</span><span class="tip-text">Chamomile tea or tart cherry juice in the evening. Aim for 2–3 L of water across the day.</span></div>
+      <div class="tip-row"><span class="tip-badge bg-r">Avoid</span><span class="tip-text">Caffeine after 10:00–10:30 am. With an 8:30 pm bedtime and a 6-hour half-life, later caffeine is still active at bedtime.</span></div>
+      <div class="tip-row"><span class="tip-badge bg-r">Avoid</span><span class="tip-text">Alcohol within 3 hours of bed — it fragments sleep, suppresses REM, and causes early waking.</span></div>
+      <div class="tip-row"><span class="tip-badge bg-r">Avoid</span><span class="tip-text">Large, heavy, or spicy meals after 6:30 pm. Digestion raises core body temperature and disrupts sleep onset.</span></div>
+    </div>
+
+    <h2>Daytime fatigue management</h2>
+    <div style="margin-bottom:14px">
+      <div class="tip-row"><span class="tip-badge bg-g">Napping</span><span class="tip-text">If needed, a 10–20 min nap between 1:00–2:30 pm is safe. Set an alarm — shorter naps protect your sleep pressure.</span></div>
+      <div class="tip-row"><span class="tip-badge bg-r">Avoid</span><span class="tip-text">Never nap after 3:00 pm or for longer than 30 min. This directly reduces your drive to sleep at 8:30 pm.</span></div>
+      <div class="tip-row"><span class="tip-badge bg-b">Tip</span><span class="tip-text">The 2:00–3:00 pm dip is biological. Combat it with a short walk, cold water on the face, or a movement break — not caffeine.</span></div>
+      <div class="tip-row"><span class="tip-badge bg-b">Tip</span><span class="tip-text">Dehydration of just 1–2% significantly worsens alertness. Sip water consistently — don't wait until you're thirsty.</span></div>
+    </div>
+
+    <h2>Daily tracker — rate each 1–5</h2>
+    <div id="tracker-area" style="margin-bottom:14px">
+      <div class="tr-row"><span class="tr-label">Morning energy on waking</span><div class="tr-dots" data-t="0"></div></div>
+      <div class="tr-row"><span class="tr-label">Sleep duration (felt adequate?)</span><div class="tr-dots" data-t="1"></div></div>
+      <div class="tr-row"><span class="tr-label">Daytime energy &amp; focus</span><div class="tr-dots" data-t="2"></div></div>
+      <div class="tr-row"><span class="tr-label">Mood &amp; emotional steadiness</span><div class="tr-dots" data-t="3"></div></div>
+      <div class="tr-row"><span class="tr-label">Wind-down routine completed</span><div class="tr-dots" data-t="4"></div></div>
+    </div>
+
+    <div class="warn">
+      <div class="warn-title">Consistency, patience &amp; when to seek help</div>
+      <div class="warn-text">Most people notice meaningful improvement within 5–7 days. Full circadian adaptation takes 2–3 weeks. Make only one adjustment at a time and wait 3–5 days to assess it. If fatigue and poor sleep persist beyond 2–3 weeks despite consistent effort, please consult a GP — sleep apnoea or another underlying condition may need investigation.</div>
+    </div>
+  </div>
+
+  <!-- ===================== MEALS PAGE ===================== -->
+  <div class="page" id="pg-meals">
+    <h2>Belly fat loss — targets</h2>
+    <div class="macro-row">
+      <div class="macro-card"><div class="macro-val" style="color:#185fa5">High</div><div class="macro-lbl">Lean protein every meal</div></div>
+      <div class="macro-card"><div class="macro-val" style="color:#639922">Moderate</div><div class="macro-lbl">Complex carbs, timed well</div></div>
+      <div class="macro-card"><div class="macro-val" style="color:#993c1d">Low</div><div class="macro-lbl">Sugar &amp; processed food</div></div>
+    </div>
+    <div class="pill-row">
+      <span class="pill pg">Chicken</span><span class="pill pg">Turkey</span><span class="pill pg">Lean beef</span><span class="pill pg">Eggs</span>
+      <span class="pill pg">Greek yoghurt</span><span class="pill pg">Legumes</span><span class="pill pg">Tofu</span><span class="pill pg">Cottage cheese</span>
+      <span class="pill pr">Fried food</span><span class="pill pr">Sugary drinks</span><span class="pill pr">White bread</span><span class="pill pr">Alcohol</span>
+    </div>
+
+    <h2>7-day meal plan (no seafood)</h2>
+    <div class="dtab-row">
+      <div class="dtab on" onclick="switchDay(this,'d1')">Mon</div>
+      <div class="dtab" onclick="switchDay(this,'d2')">Tue</div>
+      <div class="dtab" onclick="switchDay(this,'d3')">Wed</div>
+      <div class="dtab" onclick="switchDay(this,'d4')">Thu</div>
+      <div class="dtab" onclick="switchDay(this,'d5')">Fri</div>
+      <div class="dtab" onclick="switchDay(this,'d6')">Sat</div>
+      <div class="dtab" onclick="switchDay(this,'d7')">Sun</div>
+    </div>
+    <div class="dpanel on" id="d1"><div class="g2">
+      <div class="mc bk"><div class="mc-label">Breakfast 5:00 am</div><div class="mc-name">Overnight oats + Greek yoghurt</div><div class="mc-detail">Rolled oats, Greek yoghurt, chia seeds, handful of berries. Prep the night before — zero effort in the morning.</div></div>
+      <div class="mc ln"><div class="mc-label">Lunch ~12:00 pm</div><div class="mc-name">Grilled chicken &amp; quinoa bowl</div><div class="mc-detail">Chicken breast, quinoa, cherry tomatoes, cucumber, baby spinach, olive oil &amp; lemon dressing.</div></div>
+      <div class="mc dn"><div class="mc-label">Dinner 5:30–6:30</div><div class="mc-name">Lean beef stir-fry</div><div class="mc-detail">Lean beef strips, broccoli, capsicum, bok choy, light soy &amp; garlic. Cauliflower rice or small serve of brown rice.</div></div>
+      <div class="mc sn"><div class="mc-label">Snack if needed</div><div class="mc-name">Apple + almond butter</div><div class="mc-detail">Keeps blood sugar stable. Eat before 7:00 pm.</div></div>
+    </div></div>
+    <div class="dpanel" id="d2"><div class="g2">
+      <div class="mc bk"><div class="mc-label">Breakfast 5:00 am</div><div class="mc-name">Scrambled eggs on sourdough</div><div class="mc-detail">3 eggs, 1 slice sourdough, baby spinach, sliced tomato. Fast and high-protein.</div></div>
+      <div class="mc ln"><div class="mc-label">Lunch ~12:00 pm</div><div class="mc-name">Turkey &amp; avocado wrap</div><div class="mc-detail">Wholegrain wrap, sliced turkey breast, avocado, lettuce, tomato, mustard. Carrot sticks on the side.</div></div>
+      <div class="mc dn"><div class="mc-label">Dinner 5:30–6:30</div><div class="mc-name">Baked chicken thighs &amp; roast veg</div><div class="mc-detail">Skinless chicken thighs, sweet potato, zucchini &amp; red onion, paprika and olive oil.</div></div>
+      <div class="mc sn"><div class="mc-label">Snack if needed</div><div class="mc-name">Mixed nuts (small handful)</div><div class="mc-detail">Walnuts, almonds, cashews — about 20–25g.</div></div>
+    </div></div>
+    <div class="dpanel" id="d3"><div class="g2">
+      <div class="mc bk"><div class="mc-label">Breakfast 5:00 am</div><div class="mc-name">Protein smoothie</div><div class="mc-detail">Banana, vanilla protein powder, oat milk, peanut butter, small handful of spinach. Ready in 2 minutes.</div></div>
+      <div class="mc ln"><div class="mc-label">Lunch ~12:00 pm</div><div class="mc-name">Chicken &amp; lentil soup</div><div class="mc-detail">Chicken breast, red lentils, carrots, celery, onion, garlic, turmeric broth. Batch-cook for easy lunches.</div></div>
+      <div class="mc dn"><div class="mc-label">Dinner 5:30–6:30</div><div class="mc-name">Chickpea &amp; spinach curry</div><div class="mc-detail">Chickpeas, canned tomatoes, baby spinach, onion, garlic, cumin, garam masala. Small serve of basmati rice.</div></div>
+      <div class="mc sn"><div class="mc-label">Snack if needed</div><div class="mc-name">Cottage cheese &amp; cucumber</div><div class="mc-detail">High protein, low calorie. Add a pinch of black pepper.</div></div>
+    </div></div>
+    <div class="dpanel" id="d4"><div class="g2">
+      <div class="mc bk"><div class="mc-label">Breakfast 5:00 am</div><div class="mc-name">Egg &amp; veggie omelette</div><div class="mc-detail">3 eggs, capsicum, mushrooms, onion, a little feta. Cooks in 5 minutes. Pair with a piece of fruit.</div></div>
+      <div class="mc ln"><div class="mc-label">Lunch ~12:00 pm</div><div class="mc-name">Beef &amp; brown rice bowl</div><div class="mc-detail">Lean mince beef, garlic, onion, diced tomatoes. Over brown rice with steamed broccoli.</div></div>
+      <div class="mc dn"><div class="mc-label">Dinner 5:30–6:30</div><div class="mc-name">Grilled chicken &amp; Greek salad</div><div class="mc-detail">Chicken breast, tomato, cucumber, red onion, olives, feta, olive oil &amp; oregano.</div></div>
+      <div class="mc sn"><div class="mc-label">Snack if needed</div><div class="mc-name">Greek yoghurt &amp; berries</div><div class="mc-detail">Plain Greek yoghurt, blueberries or strawberries. Eat before 7:00 pm.</div></div>
+    </div></div>
+    <div class="dpanel" id="d5"><div class="g2">
+      <div class="mc bk"><div class="mc-label">Breakfast 5:00 am</div><div class="mc-name">Overnight oats — peanut butter</div><div class="mc-detail">Rolled oats, oat milk, peanut butter, sliced banana, cinnamon. Prepped the night before.</div></div>
+      <div class="mc ln"><div class="mc-label">Lunch ~12:00 pm</div><div class="mc-name">Tofu &amp; vegetable stir-fry</div><div class="mc-detail">Firm tofu, broccolini, snap peas, carrot, sesame oil &amp; low-sodium soy. Brown rice.</div></div>
+      <div class="mc dn"><div class="mc-label">Dinner 5:30–6:30</div><div class="mc-name">Turkey mince bolognese</div><div class="mc-detail">Lean turkey mince, canned tomatoes, onion, garlic, carrot, celery. Zucchini noodles or small serve of wholegrain pasta.</div></div>
+      <div class="mc sn"><div class="mc-label">Snack if needed</div><div class="mc-name">Sliced apple &amp; walnuts</div><div class="mc-detail">Anti-inflammatory and filling. Eat before 7:00 pm.</div></div>
+    </div></div>
+    <div class="dpanel" id="d6"><div class="g2">
+      <div class="mc bk"><div class="mc-label">Breakfast — relaxed</div><div class="mc-name">Veggie frittata</div><div class="mc-detail">4 eggs, zucchini, mushrooms, onion, baked in the oven. Makes 2 servings — save one for the week.</div></div>
+      <div class="mc ln"><div class="mc-label">Lunch</div><div class="mc-name">Chicken burrito bowl</div><div class="mc-detail">Grilled chicken, black beans, brown rice, corn, avocado, salsa, lime.</div></div>
+      <div class="mc dn"><div class="mc-label">Dinner 5:30–6:30</div><div class="mc-name">Slow-cooked beef &amp; vegetables</div><div class="mc-detail">Lean beef, sweet potato, carrot, onion, tomato paste, beef stock. Prep in the morning, ready at dinner.</div></div>
+      <div class="mc sn"><div class="mc-label">Snack if needed</div><div class="mc-name">Hummus &amp; veggie sticks</div><div class="mc-detail">Carrot, celery, cucumber with 2–3 tbsp hummus.</div></div>
+    </div></div>
+    <div class="dpanel" id="d7"><div class="g2">
+      <div class="mc bk"><div class="mc-label">Breakfast — relaxed</div><div class="mc-name">Poached eggs &amp; avocado toast</div><div class="mc-detail">2 poached eggs, 1 slice sourdough, half an avocado, sliced tomato, black pepper.</div></div>
+      <div class="mc ln"><div class="mc-label">Lunch</div><div class="mc-name">Lentil &amp; roast veg salad</div><div class="mc-detail">Brown lentils, roasted pumpkin, red onion, baby spinach, walnuts, balsamic &amp; olive oil.</div></div>
+      <div class="mc dn"><div class="mc-label">Dinner 5:30–6:30</div><div class="mc-name">Chicken &amp; vegetable soup</div><div class="mc-detail">Chicken breast, sweet corn, carrot, celery, zucchini, clear chicken broth, fresh parsley. Batch-cook for the week.</div></div>
+      <div class="mc sn"><div class="mc-label">Snack if needed</div><div class="mc-name">Casein protein shake</div><div class="mc-detail">Slow-digesting — ideal before bed. Supports overnight muscle repair and reduces hunger.</div></div>
+    </div></div>
+
+    <div class="info" style="margin-top:10px">
+      <div class="info-title">Key principles for belly fat loss</div>
+      <div class="info-text">High protein (1.6–2g per kg body weight) preserves muscle while losing fat. Fibre from vegetables and legumes specifically reduces visceral fat. Avoid all sugary drinks. Eat dinner by 6:30 pm — this allows overnight fat metabolism to begin well before sleep. The single biggest lever is reducing ultra-processed foods and added sugar, not eliminating food groups.</div>
+    </div>
+  </div>
+
+  <!-- ===================== EXERCISE PAGE ===================== -->
+  <div class="page" id="pg-exercise">
+    <h2>Weekly schedule (3:30–5:00 pm window)</h2>
+    <div class="week-grid">
+      <div class="wday"><div class="wday-name">Mon</div><div class="wday-type wtc">Cardio</div><div class="dot dc"></div></div>
+      <div class="wday"><div class="wday-name">Tue</div><div class="wday-type wts">Strength</div><div class="dot ds"></div></div>
+      <div class="wday"><div class="wday-name">Wed</div><div class="wday-type wth">HIIT</div><div class="dot dh"></div></div>
+      <div class="wday"><div class="wday-name">Thu</div><div class="wday-type wtr">Rest/walk</div><div class="dot dr"></div></div>
+      <div class="wday"><div class="wday-name">Fri</div><div class="wday-type wts">Strength</div><div class="dot ds"></div></div>
+      <div class="wday"><div class="wday-name">Sat</div><div class="wday-type wta">Active fun</div><div class="dot da"></div></div>
+      <div class="wday"><div class="wday-name">Sun</div><div class="wday-type wtr">Full rest</div><div class="dot dr"></div></div>
+    </div>
+
+    <div class="ex-block">
+      <h3 style="color:#185fa5">Cardio (Mon) — 35–45 min</h3>
+      <div class="gex">
+        <div class="ex-card"><div class="ex-name">Brisk walking / power walk</div><div class="ex-meta metac">40 min, moderate pace</div><div class="ex-tip">Great starting point. Fat-burning zone. Perfect for Perth's flat paths and river walks.</div></div>
+        <div class="ex-card"><div class="ex-name">Cycling (outdoor or stationary)</div><div class="ex-meta metac">35–40 min, steady effort</div><div class="ex-tip">Low joint impact, high calorie burn. Heart rate at 60–70% max — able to hold a conversation.</div></div>
+        <div class="ex-card"><div class="ex-name">Jog / run-walk intervals</div><div class="ex-meta metac">30–35 min</div><div class="ex-tip">Alternate 2 min jog + 1 min walk if not running-fit yet. Builds base fitness quickly.</div></div>
+      </div>
+    </div>
+
+    <div class="ex-block">
+      <h3 style="color:#993c1d">HIIT (Wed) — 25–30 min total</h3>
+      <div class="gex">
+        <div class="ex-card"><div class="ex-name">Bodyweight circuit</div><div class="ex-meta metah">40 sec on / 20 sec rest × 4 rounds</div><div class="ex-tip">Jumping jacks, high knees, mountain climbers, squat jumps. No equipment. Most effective for belly fat loss.</div></div>
+        <div class="ex-card"><div class="ex-name">Sprint intervals</div><div class="ex-meta metah">30 sec sprint / 90 sec walk × 8</div><div class="ex-tip">Outdoor or treadmill. Produces EPOC — your body burns fat for hours after the session ends.</div></div>
+        <div class="ex-card"><div class="ex-name">Skipping (jump rope)</div><div class="ex-meta metah">1 min on / 30 sec rest × 10</div><div class="ex-tip">Cheap, effective, excellent fat-burner. One of the best calorie-per-minute exercises available.</div></div>
+      </div>
+    </div>
+
+    <div class="ex-block">
+      <h3 style="color:#3b6d11">Strength (Tue &amp; Fri) — 40–45 min</h3>
+      <div class="gex">
+        <div class="ex-card"><div class="ex-name">Squats</div><div class="ex-meta metas">3 × 12–15 reps</div><div class="ex-tip">Biggest muscle group = most calories burned. Bodyweight first, add dumbbells when easy.</div></div>
+        <div class="ex-card"><div class="ex-name">Push-ups</div><div class="ex-meta metas">3 × 10–15 reps</div><div class="ex-tip">Upper body compound. Elevate hands to make easier, raise feet to progress.</div></div>
+        <div class="ex-card"><div class="ex-name">Dumbbell deadlift</div><div class="ex-meta metas">3 × 10–12 reps</div><div class="ex-tip">Builds metabolically active muscle tissue — the most powerful long-term fat loss tool.</div></div>
+        <div class="ex-card"><div class="ex-name">Plank variations</div><div class="ex-meta metas">3 × 30–45 sec holds</div><div class="ex-tip">Standard, side plank, shoulder taps. Targets deep abdominal muscles linked to visceral fat.</div></div>
+        <div class="ex-card"><div class="ex-name">Reverse lunges</div><div class="ex-meta metas">3 × 10 each leg</div><div class="ex-tip">Easier on the knees than forward lunges. Add dumbbells once bodyweight is comfortable.</div></div>
+        <div class="ex-card"><div class="ex-name">Dumbbell rows</div><div class="ex-meta metas">3 × 12 each side</div><div class="ex-tip">Single-arm bent-over row. Back strength and posture — supports all other movements.</div></div>
+      </div>
+    </div>
+
+    <div class="warn">
+      <div class="warn-title">Why compound strength beats crunches for belly fat</div>
+      <div class="warn-text">Spot reduction is a myth. Compound movements (squats, deadlifts, push-ups) build muscle across your whole body, raising your resting metabolic rate so you burn more fat around the clock. Combined with HIIT twice a week and the dietary changes, this is the fastest evidence-based route to reducing visceral abdominal fat.</div>
+    </div>
+  </div>
+
+  <!-- ===================== STRETCH PAGE ===================== -->
+  <div class="page" id="pg-stretch">
+    <div class="info" style="margin-bottom:12px">
+      <div class="info-title">How to use this routine (20–25 min, 7:30–8:00 pm)</div>
+      <div class="info-text">Do this in a dimly lit room on a mat. Move slowly, breathe deeply through each hold. Never force a stretch — gentle tension only. This sequence is ordered to lower cortisol, release physical tension, and signal your nervous system that sleep is coming. Do the full routine on rest days; on exercise days, prioritise steps 1, 3, 6 and 9 as a minimum.</div>
+    </div>
+
+    <div class="card">
+      <div class="stretch-item">
+        <div class="sh"><div class="snum">1</div><div class="sname">Child's pose</div><div class="sdur">90 sec</div></div>
+        <div class="sdesc">Kneel, sit back onto heels, reach arms forward, forehead on the mat. Deep belly breathing. Releases lower back and hips — areas that tighten from physical work and long days on your feet.</div>
+      </div>
+      <div class="stretch-item">
+        <div class="sh"><div class="snum">2</div><div class="sname">Supine knee-to-chest</div><div class="sdur">60 sec each side</div></div>
+        <div class="sdesc">Lie on your back. Pull one knee gently toward your chest, hold, then switch. Releases the lumbar spine and piriformis. Especially useful if you're on your feet for much of the workday.</div>
+      </div>
+      <div class="stretch-item">
+        <div class="sh"><div class="snum">3</div><div class="sname">Supine spinal twist</div><div class="sdur">60 sec each side</div></div>
+        <div class="sdesc">Lying on your back, bring one knee across your body and let it fall to the opposite side. Arms out in a T. Keep both shoulders on the floor. Decompresses the spine and activates the parasympathetic nervous system.</div>
+      </div>
+      <div class="stretch-item">
+        <div class="sh"><div class="snum">4</div><div class="sname">Seated forward fold</div><div class="sdur">90 sec</div></div>
+        <div class="sdesc">Sit with legs straight. Hinge from the hips and reach toward your feet. Let your head and neck hang heavy. Keep a slight bend in the knees if tight. Stretches hamstrings and lower back.</div>
+      </div>
+      <div class="stretch-item">
+        <div class="sh"><div class="snum">5</div><div class="sname">Hip flexor lunge stretch</div><div class="sdur">60 sec each side</div></div>
+        <div class="sdesc">From kneeling, step one foot forward into a lunge. Sink hips gently forward and downward. Hip flexors tighten significantly with early starts and physical work. Releasing them reduces overnight muscle tension and lower back pain.</div>
+      </div>
+      <div class="stretch-item">
+        <div class="sh"><div class="snum">6</div><div class="sname">Legs-up-the-wall</div><div class="sdur">3–5 min</div></div>
+        <div class="sdesc">Lie on your back with legs resting vertically up a wall, hips close to the wall, arms relaxed at your sides. Promotes venous return, lowers heart rate, and is clinically associated with faster sleep onset. The single most effective pre-sleep position known.</div>
+      </div>
+      <div class="stretch-item">
+        <div class="sh"><div class="snum">7</div><div class="sname">Reclining butterfly</div><div class="sdur">90 sec</div></div>
+        <div class="sdesc">Lie on your back, bring soles of feet together and let knees fall out to the sides. Hands on your belly or at your sides. Releases inner thighs, groin, and hips. Try to make your exhale longer than your inhale.</div>
+      </div>
+      <div class="stretch-item">
+        <div class="sh"><div class="snum">8</div><div class="sname">Neck &amp; shoulder release</div><div class="sdur">30 sec × 4 directions</div></div>
+        <div class="sdesc">Seated or lying. Slowly tilt: ear to shoulder, chin to chest, gentle left and right rotations. Never roll the head backward. Hold 30 seconds each. Relieves tension headaches and jaw clenching that often accompanies fatigue.</div>
+      </div>
+      <div class="stretch-item">
+        <div class="sh"><div class="snum">9</div><div class="sname">4-7-8 breathing (closing)</div><div class="sdur">5 cycles</div></div>
+        <div class="sdesc">Lie flat. Inhale through the nose for 4 counts, hold for 7 counts, exhale slowly through the mouth for 8 counts. Repeat 5 times. Activates the vagus nerve and reliably lowers heart rate within minutes. Do this last — then go straight to bed.</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+<script>
+function showPage(id, el) {
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('on'));
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('on'));
+  el.classList.add('on');
+  document.getElementById('pg-' + id).classList.add('on');
+}
+function switchDay(el, id) {
+  el.closest('.dtab-row').querySelectorAll('.dtab').forEach(t => t.classList.remove('on'));
+  el.classList.add('on');
+  document.querySelectorAll('.dpanel').forEach(p => p.classList.remove('on'));
+  document.getElementById(id).classList.add('on');
+}
+document.querySelectorAll('.tr-dots').forEach(function(container) {
+  var idx = container.dataset.t;
+  for (var i = 1; i <= 5; i++) {
+    var d = document.createElement('div');
+    d.className = 'tr-dot';
+    d.dataset.val = i;
+    d.dataset.idx = idx;
+    d.onclick = function() {
+      var v = parseInt(this.dataset.val);
+      var ix = this.dataset.idx;
+      document.querySelectorAll('[data-t="' + ix + '"] .tr-dot').forEach(function(dd, di) {
+        dd.classList.toggle('on', di < v);
+      });
+    };
+    container.appendChild(d);
+  }
+});
+</script>
+</body>
+</html>
