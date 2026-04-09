@@ -1,0 +1,210 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--font-sans); background: transparent; color: var(--color-text-primary); padding: 0; }
+
+.dash { padding: 1rem 0 2rem; }
+
+.header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem; gap: 1rem; flex-wrap: wrap; }
+.header-left {}
+.eyebrow { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 6px; }
+.overall { font-size: 22px; font-weight: 500; display: flex; align-items: center; gap: 10px; }
+.dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+.dot-up { background: #22c55e; }
+.dot-down { background: #ef4444; }
+.dot-warn { background: #f59e0b; }
+.header-right { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
+.timestamp { font-size: 11px; color: var(--color-text-tertiary); }
+.refresh-btn { font-size: 12px; padding: 5px 12px; cursor: pointer; border: 0.5px solid var(--color-border-secondary); border-radius: var(--border-radius-md); background: transparent; color: var(--color-text-secondary); }
+.refresh-btn:hover { background: var(--color-background-secondary); }
+.refresh-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.summary { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 1.5rem; }
+.stat { background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 12px 14px; }
+.stat-num { font-size: 24px; font-weight: 500; line-height: 1; margin-bottom: 4px; }
+.stat-num-up { color: #22c55e; }
+.stat-num-down { color: #ef4444; }
+.stat-num-muted { color: var(--color-text-secondary); }
+.stat-label { font-size: 11px; color: var(--color-text-tertiary); text-transform: uppercase; letter-spacing: 0.08em; }
+
+.group { margin-bottom: 1.25rem; }
+.group-name { font-size: 11px; color: var(--color-text-tertiary); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 6px; padding-left: 2px; }
+
+.monitor { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 12px; padding: 12px 14px; background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); margin-bottom: 4px; border-left-width: 3px; }
+.monitor-up { border-left-color: #22c55e; }
+.monitor-down { border-left-color: #ef4444; }
+
+.monitor-left { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.monitor-name { font-size: 14px; font-weight: 500; }
+.monitor-type { font-size: 10px; color: var(--color-text-tertiary); text-transform: uppercase; letter-spacing: 0.06em; }
+
+.monitor-right { display: flex; align-items: center; gap: 14px; flex-shrink: 0; }
+
+.hb { display: flex; align-items: flex-end; gap: 2px; height: 24px; }
+.hb-bar { width: 3px; border-radius: 1px; min-height: 3px; opacity: 0.7; }
+.hb-bar-up { background: #22c55e; }
+.hb-bar-down { background: #ef4444; opacity: 1; }
+
+.latency { font-size: 12px; color: var(--color-text-secondary); min-width: 52px; text-align: right; font-variant-numeric: tabular-nums; }
+
+.badge { font-size: 10px; padding: 3px 8px; border-radius: var(--border-radius-md); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 500; }
+.badge-up { background: #dcfce7; color: #15803d; }
+.badge-down { background: #fee2e2; color: #b91c1c; }
+
+.loading { padding: 3rem 0; text-align: center; color: var(--color-text-tertiary); font-size: 14px; }
+.spinner { display: inline-block; width: 18px; height: 18px; border: 2px solid var(--color-border-tertiary); border-top-color: var(--color-text-secondary); border-radius: 50%; animation: spin 0.7s linear infinite; margin-bottom: 12px; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.error { padding: 1rem; background: var(--color-background-danger); border-radius: var(--border-radius-md); color: var(--color-text-danger); font-size: 13px; }
+
+.footer { display: flex; justify-content: space-between; align-items: center; padding-top: 1rem; border-top: 0.5px solid var(--color-border-tertiary); margin-top: 0.5rem; }
+.footer-text { font-size: 11px; color: var(--color-text-tertiary); }
+.countdown { font-size: 11px; color: var(--color-text-tertiary); }
+</style>
+</head>
+<body>
+<div class="dash">
+  <div id="root"><div class="loading"><div class="spinner"></div><br>Fetching status...</div></div>
+</div>
+
+<script>
+const REFRESH = 60;
+let timer = null;
+let countdown = REFRESH;
+let countdownTimer = null;
+
+function fmt(ts) {
+  return new Date(ts * 1000).toLocaleTimeString('en-AU', {hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false});
+}
+
+function latFmt(ms) {
+  if (ms == null) return '—';
+  return ms >= 1000 ? (ms/1000).toFixed(1)+'s' : ms+'ms';
+}
+
+function hbBars(beats) {
+  if (!beats || !beats.length) return '';
+  const recent = beats.slice(0, 35).reverse();
+  const ups = recent.filter(b => b.status==='up').map(b => b.latency_ms);
+  const maxMs = ups.length ? Math.max(...ups) : 1000;
+  return recent.map(b => {
+    if (b.status !== 'up') return `<div class="hb-bar hb-bar-down" style="height:24px" title="DOWN"></div>`;
+    const h = Math.max(3, Math.min(24, 3 + (b.latency_ms / maxMs) * 21));
+    return `<div class="hb-bar hb-bar-up" style="height:${Math.round(h)}px" title="${b.latency_ms}ms"></div>`;
+  }).join('');
+}
+
+function render(data) {
+  const s = data.summary;
+  const anyDown = s.down > 0;
+  const overallText = anyDown ? `${s.down} system${s.down>1?'s':''} down` : 'All systems operational';
+  const dotCls = anyDown ? 'dot-down' : 'dot-up';
+
+  const groups = {};
+  data.monitors.forEach(m => {
+    const g = m.group_name || 'Monitors';
+    if (!groups[g]) groups[g] = [];
+    groups[g].push(m);
+  });
+
+  const groupsHTML = Object.entries(groups).map(([g, ms]) => `
+    <div class="group">
+      <div class="group-name">${g}</div>
+      ${ms.map(m => `
+        <div class="monitor monitor-${m.status}">
+          <div class="monitor-left">
+            <div class="dot dot-${m.status}"></div>
+            <div>
+              <div class="monitor-name">${m.name}</div>
+              <div class="monitor-type">${m.type}</div>
+            </div>
+          </div>
+          <div class="monitor-right">
+            <div class="hb">${hbBars(m.heartbeats)}</div>
+            <div class="latency">${latFmt(m.last_latency_ms)}</div>
+            <div class="badge badge-${m.status}">${m.status}</div>
+          </div>
+        </div>
+      `).join('')}
+    </div>
+  `).join('');
+
+  document.getElementById('root').innerHTML = `
+    <div class="header">
+      <div class="header-left">
+        <div class="eyebrow">${data.site_title || 'System Status'}</div>
+        <div class="overall">
+          <div class="dot ${dotCls}"></div>
+          ${overallText}
+        </div>
+      </div>
+      <div class="header-right">
+        <div class="timestamp">Checked ${fmt(data.generated_at)}</div>
+        <button class="refresh-btn" onclick="load()">↻ Refresh</button>
+      </div>
+    </div>
+
+    <div class="summary">
+      <div class="stat"><div class="stat-num stat-num-up">${s.up}</div><div class="stat-label">Online</div></div>
+      <div class="stat"><div class="stat-num ${s.down?'stat-num-down':'stat-num-muted'}">${s.down}</div><div class="stat-label">Down</div></div>
+      <div class="stat"><div class="stat-num stat-num-muted">${s.maintenance}</div><div class="stat-label">Maintenance</div></div>
+      <div class="stat"><div class="stat-num stat-num-muted">${data.monitors.length}</div><div class="stat-label">Total</div></div>
+    </div>
+
+    ${groupsHTML}
+
+    <div class="footer">
+      <div class="footer-text">${data.site_timezone || ''}</div>
+      <div class="countdown" id="cd">Auto-refresh in ${REFRESH}s</div>
+    </div>
+  `;
+}
+
+async function load() {
+  clearInterval(countdownTimer);
+  clearTimeout(timer);
+  countdown = REFRESH;
+  document.getElementById('root').innerHTML = '<div class="loading"><div class="spinner"></div><br>Fetching status...</div>';
+
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        system: 'You are a data relay. Fetch the URL provided and return ONLY the raw JSON body, no commentary, no markdown, no explanation.',
+        messages: [{ role: 'user', content: 'Fetch this URL and return its JSON body only: https://uptime.msgonhld.workers.dev/api/v1/public/status' }],
+        tools: [{ type: 'web_search_20250305', name: 'web_search' }]
+      })
+    });
+
+    const raw = await res.json();
+    const text = raw.content.filter(b => b.type === 'text').map(b => b.text).join('');
+    const jsonMatch = text.match(/\{[\s\S]*\}/);
+    if (!jsonMatch) throw new Error('No JSON in response');
+    const data = JSON.parse(jsonMatch[0]);
+    render(data);
+    startCountdown();
+  } catch(e) {
+    document.getElementById('root').innerHTML = `<div class="error">Failed to fetch status: ${e.message}</div><br><button class="refresh-btn" onclick="load()">↻ Retry</button>`;
+  }
+}
+
+function startCountdown() {
+  countdown = REFRESH;
+  countdownTimer = setInterval(() => {
+    countdown--;
+    const el = document.getElementById('cd');
+    if (el) el.textContent = `Auto-refresh in ${countdown}s`;
+    if (countdown <= 0) { clearInterval(countdownTimer); load(); }
+  }, 1000);
+}
+
+load();
+</script>
+</body>
+</html>
